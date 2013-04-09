@@ -32,7 +32,7 @@ public class WinkJsClientServlet extends RestServlet {
 	}
 
 	private void scanResources() {
-		this.apiWriter = new RestEasyJSWriter( getServletContext() );
+		this.apiWriter = new RestEasyJSWriter( );
 	}
 
 	@Override
@@ -59,6 +59,7 @@ public class WinkJsClientServlet extends RestServlet {
 			logger.debug("Serving " + pathInfo);
 			logger.debug("Query " + req.getQueryString());
 		}
-		this.apiWriter.writeJavaScript(uri, printWriter, conf);
+		printWriter.write( this.apiWriter.generateJavaScript(uri, conf) .toString() );
+//		this.apiWriter.writeJavaScript(uri, printWriter, conf);
 	}
 }
