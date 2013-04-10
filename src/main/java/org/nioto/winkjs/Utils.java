@@ -11,9 +11,16 @@ import org.apache.wink.server.internal.registry.ResourceRecord;
 
 public class Utils {
 
+	/**
+	 * private constructor to avoid multiples instances
+	 */
 	private Utils() {
 	}
 
+	/**
+	 * Close a  {@link Closeable} discarding exception .
+	 * @param  input Element to close. 
+	 */
 	public static final void closeQuietly(Closeable input) {
 		try {
 			if (input != null) {
@@ -35,6 +42,12 @@ public class Utils {
 			return name ;
 		}
 	}
+	/**
+	 *  Append the content of an {@link InputStream} into a {@link StringBuilder}
+	 * @param input {@link InputStream} to read
+	 * @param sb {@link StringBuilder} to append to
+	 * @throws IOException In case or IO read excetion
+	 */
 	public static void copyFileContent(InputStream input, StringBuilder sb) throws IOException {
 		try {
 			Reader reader = new InputStreamReader(input);

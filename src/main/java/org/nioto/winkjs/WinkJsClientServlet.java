@@ -42,24 +42,29 @@ public class WinkJsClientServlet extends RestServlet {
 					req.getPathInfo() });
 		}
 		if ( JS_URI.equals(req.getPathInfo())) {
-			returnJS(req, resp);
+			sendJavascriptCode(req, resp);
 		} else {
 			super.service(req, resp);
 		}
 	}
 
-	private void returnJS(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		resp.setContentType("text/plain");
-		DeploymentConfiguration conf = getRequestProcessor().getConfiguration();
-		PrintWriter printWriter = resp.getWriter();
+	private void sendJavascriptCode(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		resp.setContentType("application/javascript");
 		String pathInfo = req.getPathInfo();
 		String uri = req.getRequestURL().toString();
 		uri = uri.substring(0, 1+uri.length() - JS_URI.length());
-		if (logger.isDebugEnabled()) {
-			logger.debug("Serving " + pathInfo);
-			logger.debug("Query " + req.getQueryString());
+		if( logger.isDebugEnabled()) {
+			logger.debug("Serving {} : ", pathInfo);
+			logger.debug("Query {} " , req.getQueryString());
 		}
-		printWriter.write( this.apiWriter.generateJavaScript(uri, conf) .toString() );
-//		this.apiWriter.writeJavaScript(uri, printWriter, conf);
+		PrintWriter printWriter = null;
+		DeploymentConfiguration conf = getRequestProcessor().getConfiguration();
+		try {
+			printWriter = resp.getWriter();
+			printWriter.write( this.apiWriter.generateJavaScript(uri, conf) .toString() );
+		} finally{
+			Utils.closeQuietly(printWriter);
+		}
 	}
+	
 }

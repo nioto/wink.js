@@ -20,7 +20,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		super( FRAMEWORK.RESTEASY);
 	}
 
-	InputStream getStream(String path) throws IOException {
+	private InputStream getStream(String path) throws IOException {
 		URL url = getClass().getResource(path);
 		logger.debug("url : {} for path {}", url, path);
 		return url != null ? url.openStream() : null;
