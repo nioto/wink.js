@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
  */
 public class Template {
 
-	private static Pattern p = Pattern.compile("\\[(.+?)\\]");
+	private static Pattern substitution = Pattern.compile("\\[(.+?)\\]");
+
+	private static Pattern tests  = Pattern.compile("(\\[!?empty\\((.+?)\\)\\])(.*)(\\[\\/empty\\])");
 
 	private String template;
 
@@ -24,17 +26,38 @@ public class Template {
 	 * @return return the 
 	 */
 	public final StringBuffer substitute(Map<String, String> data) {
-		Matcher m = p.matcher(this.template);
+		Matcher matcher;
+		//parse tests
+		matcher = tests.matcher(this.template);
 		StringBuffer sb = new StringBuffer();
-		while (m.find()) {
-			String key = m.group(1);
+		while (matcher.find()) {
+			String test = matcher.group(1);
+			String key = matcher.group(2);
+			String value = getReplacement(key, data);
+			boolean show;
+			if( test.charAt(1)=='!') {
+				show = ( value !=null && value.length()>0);
+			} else {
+				show = ( value ==null ||  value.length()==0);
+			}
+			if ( show ) {
+				matcher.appendReplacement(sb, matcher.group(3));
+			}
+		}
+		matcher.appendTail(sb);
+		
+		// variable substitution
+		matcher = substitution.matcher(sb);
+		sb = new StringBuffer();
+		while (matcher.find()) {
+			String key = matcher.group(1);
 			String value = getReplacement(key, data);
 			if (value == null) {
-				value = m.group(0);
+				value = matcher.group(0);
 			}
-			m.appendReplacement(sb, value);
+			matcher.appendReplacement(sb, Matcher.quoteReplacement(value));
 		}
-		m.appendTail(sb);
+		matcher.appendTail(sb);
 		return sb;
 	}
 
