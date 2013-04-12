@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wink.server.internal.DeploymentConfiguration;
 import org.apache.wink.server.internal.servlet.RestServlet;
-import org.nioto.winkjs.writers.RestEasyJSWriter;
+import org.nioto.winkjs.writers.AbstractJSWriter;
+import org.nioto.winkjs.writers.MootoolsJSWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class WinkJsClientServlet extends RestServlet {
 
 	private static final String JS_URI = "/api-client.js";
 
-	private RestEasyJSWriter apiWriter;
+	private AbstractJSWriter apiWriter;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -32,7 +33,7 @@ public class WinkJsClientServlet extends RestServlet {
 	}
 
 	private void scanResources() {
-		this.apiWriter = new RestEasyJSWriter( );
+		this.apiWriter = new MootoolsJSWriter();// new RestEasyJSWriter( );
 	}
 
 	@Override

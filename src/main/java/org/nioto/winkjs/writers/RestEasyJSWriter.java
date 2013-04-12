@@ -37,6 +37,8 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 				}
 		} catch (IOException e) {
 			logger.error( "unable to read resteasy-client.js ", e);
+		} finally{
+			Utils.closeQuietly(input);
 		}
 		sb.append( "REST.apiURL = '" + uri + "';\n");
 	}

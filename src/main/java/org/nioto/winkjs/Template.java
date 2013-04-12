@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * @author tonio
@@ -11,9 +14,11 @@ import java.util.regex.Pattern;
  */
 public class Template {
 
+	private static final Logger log = LoggerFactory.getLogger(Template.class);
+	
 	private static Pattern substitution = Pattern.compile("\\[(.+?)\\]");
 
-	private static Pattern tests  = Pattern.compile("(\\[!?empty\\((.+?)\\)\\])(.*)(\\[\\/empty\\])");
+	private static Pattern tests  = Pattern.compile("(\\[!?empty\\(([^(]+)\\)\\])(.*?)(\\[\\/empty\\])",  Pattern.DOTALL);
 
 	private String template;
 
@@ -30,6 +35,7 @@ public class Template {
 		//parse tests
 		matcher = tests.matcher(this.template);
 		StringBuffer sb = new StringBuffer();
+		log.debug("begin tests matcher");
 		while (matcher.find()) {
 			String test = matcher.group(1);
 			String key = matcher.group(2);
@@ -40,12 +46,13 @@ public class Template {
 			} else {
 				show = ( value ==null ||  value.length()==0);
 			}
-			if ( show ) {
-				matcher.appendReplacement(sb, matcher.group(3));
+			if( log.isDebugEnabled()) {
+				log.debug( "show : {}  ;  test : {} ; key : {} " , new Object[]{ show , test, key});
 			}
+			matcher.appendReplacement(sb, show ? Matcher.quoteReplacement( matcher.group(3) ) : "");
 		}
 		matcher.appendTail(sb);
-		
+		log.debug( "end tests matcher");
 		// variable substitution
 		matcher = substitution.matcher(sb);
 		sb = new StringBuffer();

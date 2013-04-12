@@ -4,6 +4,8 @@
 package org.nioto.winkjs.writers;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,8 @@ import org.apache.wink.server.internal.DeploymentConfiguration;
 import org.apache.wink.server.internal.registry.ResourceRecord;
 import org.apache.wink.server.internal.registry.SubResourceRecord;
 import org.nioto.winkjs.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  Abstract Class for JS Client code generation
@@ -25,6 +29,9 @@ import org.nioto.winkjs.Utils;
  */
 public abstract class AbstractJSWriter {
 
+	
+	private final static Logger log = LoggerFactory.getLogger(AbstractJSWriter.class);
+	
 	/**
 	 * Available Javascript Frameworks supported
 	 * ( mootools, RestEasyJS client, JQuery )
@@ -127,7 +134,7 @@ public abstract class AbstractJSWriter {
 	 * @param declaringPrefix prefix to use for the definition of the function
 	 * @param method Method Medadata
 	 */
-	protected abstract void generateMethod(StringBuilder script, String path,  String declaringPrefix, MethodMetadata method);
+	protected abstract void generateMethod(StringBuilder script, String path,  String declaringPrefix, MethodMetadata methodMetadata);
 	
 	/**
 	 * Defines the necessary empty objects to create a hierachy of functions
@@ -168,4 +175,21 @@ public abstract class AbstractJSWriter {
 			return set.iterator().next().toString();
 		return "text/plain";
 	}	
+	
+	protected final static StringBuilder getTemplateContent(Class<?> clazz, String relativePathToClass) {
+			URL url = clazz.getResource(relativePathToClass);
+			StringBuilder content = new StringBuilder();
+			InputStream input = null;
+			try {
+				input = url.openStream();
+				Utils.copyFileContent(input, content);
+			} catch (IOException e) {
+				log.error("unable to getTemplateContent for "+ relativePathToClass +" on " + clazz, e);
+				content.setLength(0);
+				content.append( "Error opening file " + relativePathToClass );
+			} finally {
+				Utils.closeQuietly(input);
+			}
+			return content;
+		}
 }
