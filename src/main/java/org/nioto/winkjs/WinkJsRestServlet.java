@@ -15,9 +15,9 @@ import org.nioto.winkjs.writers.MootoolsJSWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WinkJsClientServlet extends RestServlet {
+public class WinkJsRestServlet extends RestServlet {
 
-	private final static Logger logger = LoggerFactory.getLogger(WinkJsClientServlet.class);
+	private final static Logger logger = LoggerFactory.getLogger(WinkJsRestServlet.class);
 
 	private static final long serialVersionUID = 5265749198410674747L;
 
