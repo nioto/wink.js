@@ -18,6 +18,7 @@ import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.DeploymentConfiguration;
 import org.apache.wink.server.internal.registry.ResourceRecord;
 import org.apache.wink.server.internal.registry.SubResourceRecord;
+import org.apache.wink.server.internal.resources.HtmlServiceDocumentResource;
 import org.nioto.winkjs.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public abstract class AbstractJSWriter {
 	 * ( mootools, RestEasyJS client, JQuery )
 	 * @author tonio
 	 */
-	protected static enum FRAMEWORK {
+	public static enum FRAMEWORK {
 		JQUERY("jquery"), RESTEASY("resteasy"), MOOTOOLS("mootools"); 
 		private String jsFramework;
 		private FRAMEWORK(String name) {
@@ -93,8 +94,7 @@ public abstract class AbstractJSWriter {
 		StringBuilder script = new StringBuilder();
 		appendPreScript(uri, script );
 		// do 
-		Set<String> declaredPrefixes = new HashSet<String>();
-		generateServices(script, conf, declaredPrefixes);
+		generateServices(script, conf );
 		//end
 		appendPostScript(uri, script);
 		return script;
@@ -105,25 +105,39 @@ public abstract class AbstractJSWriter {
 	 * @param conf  Wink Configuration
 	 * @param declaredPrefixes list of prefix from class 
 	 */
-	private void generateServices(StringBuilder script, DeploymentConfiguration conf, Set<String> declaredPrefixes) {
+	private void generateServices(StringBuilder script, DeploymentConfiguration conf) {
 		List<ResourceRecord> resourceRecords = conf.getResourceRegistry().getRecords();
+		Set<String> declaredPrefixes = new HashSet<String>();
 		for (ResourceRecord record : resourceRecords) {
-			ClassMetadata resourceMetadata = record.getMetadata();
-			String resourcePath = resourceMetadata.getPath();
+			ClassMetadata classMetadata = record.getMetadata();
+			String resourcePath = classMetadata.getPath();
 			String declaringPrefix = Utils.getFunctionName(record, null);
-			declarePrefix(script, declaringPrefix, declaredPrefixes);
-			List<MethodMetadata> methods = resourceMetadata.getResourceMethods();
+			boolean declaredPrefix = false;
+			List<MethodMetadata> methods = classMetadata.getResourceMethods();
 			for (MethodMetadata methodMetadata : methods) {
-				generateMethod(script, resourcePath, declaringPrefix, methodMetadata);
-			}
-			for (SubResourceRecord subResourceRecord : record.getSubResourceRecords()) {
-				MethodMetadata method = subResourceRecord.getMetadata();
-				StringBuilder path = new StringBuilder(resourcePath);
-				if (!(resourcePath.endsWith("/"))) {
-					path.append("/");
+				if( isExposable(classMetadata, methodMetadata )) {
+					if( ! declaredPrefix ) {
+						declarePrefix(script, declaringPrefix, declaredPrefixes);
+						declaredPrefix=true;
+					}
+					generateMethod(script, resourcePath, declaringPrefix, methodMetadata);
 				}
-				path.append(method.getPath());
-				generateMethod(script, path.toString(), declaringPrefix, method);
+			}
+			
+			for (SubResourceRecord subResourceRecord : record.getSubResourceRecords()) {
+				MethodMetadata methodMetadata = subResourceRecord.getMetadata();
+				if( isExposable(classMetadata, methodMetadata )) {
+					if( ! declaredPrefix ) {
+						declarePrefix(script, declaringPrefix, declaredPrefixes);
+						declaredPrefix=true;
+					}
+					StringBuilder path = new StringBuilder(resourcePath);
+					if (!(resourcePath.endsWith("/"))) {
+						path.append("/");
+					}
+					path.append(methodMetadata.getPath());
+					generateMethod(script, path.toString(), declaringPrefix, methodMetadata);
+				}
 			}
 		}
 	}
@@ -192,4 +206,25 @@ public abstract class AbstractJSWriter {
 			}
 			return content;
 		}
+	
+	public final static AbstractJSWriter getWriter(String name) {
+		if( FRAMEWORK.RESTEASY.name().equals(name) ) {
+			return new RestEasyJSWriter();
+		} else {
+			return null;
+		}
+	}
+	public final static AbstractJSWriter getDefaultWriter() {
+		return getWriter( FRAMEWORK.RESTEASY.name() );
+	}
+	/**
+	 *  Check if a method can be exposed on the Javascript client API.
+	 *  Default implementation : remove default service {@link HtmlServiceDocumentResource}
+	 * @param classMetadata ClassMetadata of the exposed service
+	 * @param methodMetadata MethodMetadata of the exposed service
+	 * @return
+	 */
+	protected boolean isExposable( ClassMetadata classMetadata, MethodMetadata methodMetadata) {
+		return  ( classMetadata.getResourceClass() != HtmlServiceDocumentResource.class );
+	}
 }

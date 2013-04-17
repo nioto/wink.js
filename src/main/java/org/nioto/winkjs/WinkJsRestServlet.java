@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.wink.server.internal.DeploymentConfiguration;
 import org.apache.wink.server.internal.servlet.RestServlet;
 import org.nioto.winkjs.writers.AbstractJSWriter;
-import org.nioto.winkjs.writers.MootoolsJSWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,24 +22,16 @@ public class WinkJsRestServlet extends RestServlet {
 
 	private static final String JS_URI = "/api-client.js";
 
-	private AbstractJSWriter apiWriter;
-
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		logger.debug("init()");
-		scanResources();
-	}
-
-	private void scanResources() {
-		this.apiWriter = new MootoolsJSWriter();// new RestEasyJSWriter( );
 	}
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (logger.isDebugEnabled()) {
-			logger.debug(" request uri : {} , url : {}, pathinfo :{} ", new Object[] { req.getRequestURI(), req.getRequestURL(),
-					req.getPathInfo() });
+			logger.debug(" request uri : {} , url : {}, pathinfo :{} ", new Object[] { req.getRequestURI(), req.getRequestURL(),	req.getPathInfo() });
 		}
 		if ( JS_URI.equals(req.getPathInfo())) {
 			sendJavascriptCode(req, resp);
@@ -49,8 +40,17 @@ public class WinkJsRestServlet extends RestServlet {
 		}
 	}
 
-	private void sendJavascriptCode(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		resp.setContentType("application/javascript");
+	private void sendJavascriptCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String framework = req.getParameter("framework");
+		AbstractJSWriter jswriter ;
+		if ( Utils.isEmpty(framework)) {
+			jswriter = AbstractJSWriter.getDefaultWriter();
+		} else {
+			jswriter = AbstractJSWriter.getWriter( framework );
+		}
+		if( jswriter == null ) {
+			throw new ServletException(" framework : " + framework + " not supported"); 
+		}
 		String pathInfo = req.getPathInfo();
 		String uri = req.getRequestURL().toString();
 		uri = uri.substring(0, 1+uri.length() - JS_URI.length());
@@ -59,13 +59,13 @@ public class WinkJsRestServlet extends RestServlet {
 			logger.debug("Query {} " , req.getQueryString());
 		}
 		PrintWriter printWriter = null;
+		resp.setContentType("application/javascript");
 		DeploymentConfiguration conf = getRequestProcessor().getConfiguration();
 		try {
 			printWriter = resp.getWriter();
-			printWriter.write( this.apiWriter.generateJavaScript(uri, conf) .toString() );
+			printWriter.write( jswriter.generateJavaScript(uri, conf) .toString() );
 		} finally{
 			Utils.closeQuietly(printWriter);
 		}
-	}
-	
+	}	
 }
