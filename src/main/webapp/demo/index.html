@@ -5,7 +5,7 @@
 
 var submit1 = function() {
   var params = {};
-  params['$entity']= { "test" :"test"};
+  params.test = "my test !!";
   params.$contentType = 'application/json';
   var e = document.getElementById("result1");
   e.innerHTML = "returned : " + JSON.stringify ( LoginService.getLogin (params) );

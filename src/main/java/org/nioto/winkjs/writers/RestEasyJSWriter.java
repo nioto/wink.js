@@ -2,9 +2,16 @@ package org.nioto.winkjs.writers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
+
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.MatrixParam;
+import javax.ws.rs.QueryParam;
 
 import org.apache.wink.common.internal.registry.Injectable;
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
@@ -99,23 +106,34 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		if (logger.isDebugEnabled()) {
 			logger.debug("param genericType  : {} // param type : {} ", metaData.getGenericType(), metaData.getParamType());
 		}
+		String paramName;
 		switch (metaData.getParamType()) {
 			case QUERY:
-				print(metaData, script, "QueryParameter");
+				QueryParam qa = Utils.findAnnotation( metaData.getAnnotations(), QueryParam.class);
+				paramName  = ( qa ==null ? 	paramName = metaData.getMember().getName() : qa.value() ); 
+				print(metaData, paramName, script, "QueryParameter");
 				break;
 			case HEADER:
-				print(metaData, script, "Header");
+				HeaderParam ha = Utils.findAnnotation( metaData.getAnnotations(), HeaderParam.class);
+				paramName  = ( ha ==null ? 	paramName = metaData.getMember().getName() : ha.value() ); 
+				print(metaData, paramName, script, "Header");
 				// FIXME: warn about forbidden headers:
 				// http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader-method
 				break;
 			case COOKIE:
-				print(metaData, script, "Cookie");
+				CookieParam ca = Utils.findAnnotation( metaData.getAnnotations(), CookieParam.class);
+				paramName  = ( ca ==null ? 	paramName = metaData.getMember().getName() : ca.value() ); 
+				print(metaData, paramName, script, "Cookie");
 				break;
 			case MATRIX:
-				print(metaData, script, "MatrixParameter");
+				MatrixParam ma = Utils.findAnnotation( metaData.getAnnotations(), MatrixParam.class);
+				paramName  = ( ma ==null ? 	paramName = metaData.getMember().getName() : ma.value() ); 
+				print(metaData, paramName, script, "MatrixParameter");
 				break;
 			case FORM:
-				print(metaData, script, "FormParameter");
+				FormParam fa = Utils.findAnnotation( metaData.getAnnotations(), FormParam.class);
+				paramName  = ( fa ==null ? 	paramName = metaData.getMember().getName() : fa.value() ); 
+				print(metaData, paramName, script, "FormParameter");
 				break;
 			case ENTITY:
 				// the entity
@@ -125,8 +143,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		}
 	}
 
-	private void print(Injectable metaData, StringBuilder script, String type) {
-		String paramName = metaData.getMember().getName();
+	private void print(Injectable metaData, String paramName, StringBuilder script, String type) {
 		script.append(String.format(" if(params.%s)\n  request.add%s('%s', params.%s);\n", paramName, type, paramName,
 				paramName));
 	}

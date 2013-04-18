@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.registry.ResourceRecord;
@@ -65,4 +66,15 @@ public class Utils {
 	public static final boolean isEmpty(String s ) {
 		return s== null || s.length()==0;
 	}
+	
+  @SuppressWarnings("unchecked")
+	public static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
+     if (searchList == null) return null;
+     for (Annotation ann : searchList) {
+        if (ann.annotationType().equals(annotation)) {
+           return (T) ann;
+        }
+     }
+     return null;
+  }
 }
