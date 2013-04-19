@@ -2,7 +2,6 @@ package org.nioto.winkjs.writers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -73,7 +72,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		script.append("  request.setCredentials(params.$username, params.$password);\n");
 		script.append(" if(params.$accepts)\n");
 		script.append("  request.setAccepts(params.$accepts);\n");
-		String wants = getWants(methodMetaData.getProduces());
+		String wants = Utils.getWants(methodMetaData.getProduces());
 		if (wants != null) {
 			script.append(" else \n");
 			script.append("  request.setAccepts('" + wants + "');\n");
@@ -81,7 +80,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		script.append(" if(params.$contentType)\n");
 		script.append("  request.setContentType(params.$contentType);\n");
 		script.append(" else\n");
-		script.append("  request.setContentType('" + getConsumes(methodMetaData.getConsumes()) + "');\n");
+		script.append("  request.setContentType('" + Utils.getConsumes(methodMetaData.getConsumes()) + "');\n");
 		script.append(" if(params.$callback){\n");
 		script.append("  request.execute(params.$callback);\n");
 		script.append(" }else{\n");

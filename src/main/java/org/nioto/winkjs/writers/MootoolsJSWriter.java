@@ -45,8 +45,8 @@ public class MootoolsJSWriter extends AbstractJSWriter {
 		data.put( "httpmethod", methodMetaData.getHttpMethod() );
 		data.put( "uri", uri );
 		data.put("functionname", declaringPrefix +"." + Utils.getFunctionName(methodMetaData) );
-		data.put("accepts", getWants(methodMetaData.getProduces()));
-		data.put("contentType", getConsumes(methodMetaData.getConsumes()) );
+		data.put("accepts", Utils.getWants(methodMetaData.getProduces()));
+		data.put("contentType", Utils.getConsumes(methodMetaData.getConsumes()) );
 		script.append( TEMPLATE.substitute(data) );
 	}
 

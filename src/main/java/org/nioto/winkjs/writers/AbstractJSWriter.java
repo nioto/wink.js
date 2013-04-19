@@ -167,28 +167,6 @@ public abstract class AbstractJSWriter {
 			}
 		}
 	}
-	/**
-	 *  Convert a liste of mediatype to a string
-	 * @param mediaTypes Set of {@link MediaType}
-	 * @return
-	 */
-	protected String getWants(Set<MediaType> mediaTypes) {
-		if (mediaTypes == null)
-			return null;
-		return StringUtils.join(mediaTypes, ',');
-	}
-/**
- *  Get the first element of a set of {@link MediaType} 
- * @param set
- * @return
- */
-	protected String getConsumes(Set<MediaType> set) {
-		if (set == null)
-			return "text/plain";
-		if (set.size() > 0)
-			return set.iterator().next().toString();
-		return "text/plain";
-	}	
 	
 	protected final static StringBuilder getTemplateContent(Class<?> clazz, String relativePathToClass) {
 			URL url = clazz.getResource(relativePathToClass);

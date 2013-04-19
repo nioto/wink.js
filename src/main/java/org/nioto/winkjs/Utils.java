@@ -6,7 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.annotation.Annotation;
+import java.util.Set;
 
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.registry.ResourceRecord;
 
@@ -66,9 +70,14 @@ public class Utils {
 	public static final boolean isEmpty(String s ) {
 		return s== null || s.length()==0;
 	}
-	
+	/**
+	 * Retrieve a annotation by its class from a list of annotations instances
+	 * @param searchList
+	 * @param annotation
+	 * @return
+	 */
   @SuppressWarnings("unchecked")
-	public static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
+	public final static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
      if (searchList == null) return null;
      for (Annotation ann : searchList) {
         if (ann.annotationType().equals(annotation)) {
@@ -77,4 +86,31 @@ public class Utils {
      }
      return null;
   }
+  /**
+   *  Choose a {@link MediaType} from a list, in this order : 
+   *   - application/json if present,
+   *   - the first element of the list, if the list is not null
+   *   - test/plain is the list is empty 
+   * @param set List of {@link MediaType}
+   * @return A (not null) string representation of the {@link MediaType}
+   */
+  public final static String getConsumes(Set<MediaType> set) {
+  		if (set != null) {
+  			if (set.contains(MediaType.APPLICATION_JSON_TYPE)) {
+  				return MediaType.APPLICATION_JSON;
+  			} else if ( ! set.isEmpty() ) {
+  				set.iterator().next().getType();
+  			}
+  		}
+  		return MediaType.TEXT_PLAIN;
+  	}
+  
+	/**
+	 *  Convert a list of mediatype to a string of comma separated 
+	 * @param mediaTypes Set of {@link MediaType}
+	 * @return
+	 */
+	public final static String getWants(Set<MediaType> mediaTypes) {
+		return StringUtils.join(mediaTypes, ',');
+	}
 }
