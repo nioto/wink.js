@@ -17,26 +17,29 @@ Replace *org.apache.wink.server.internal.servlet.RestServlet* by *org.nioto.wink
 
 Optional: you can add a *jsapiurl* init param to specify an alternate Url to get the JS API Client ( default : */api-client.js* in the ContextRoot of the webapp )
 
-### Using org.nioto.winkjs.WinkJsClientServlet withour touching your Wink RestServlet configuration
+### Using org.nioto.winkjs.WinkJsClientServlet without changing your Wink RestServlet configuration
 
 Add in your web.xml the configuration for the servlet :
 
-> <servlet>
->  <description>Simple Servlet to generate a JS client for the API</description>
->  <servlet-name>_ah_warmup0</servlet-name>
->  <servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
->   <!-- Mandatory, we need to know the path associated with Wink -->
->   <init-param>
->    <param-name>winkpath</param-name>
->    <param-value>/wink</param-value>
->   </init-param>
-> </servlet>
-> <servlet-mapping>
->   <servlet-name>_ah_warmup0</servlet-name>
->   <url-pattern>/winkjs/api.js</url-pattern>
-> </servlet-mapping> 
+    <servlet>  
+      <description>Simple Servlet to generate a JS client for the API</description>
+      <servlet-name>_ah_warmup0</servlet-name>
+      <servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
+      <!-- Mandatory, we need to know the path associated with Wink -->
+      <init-param>
+        <param-name>winkpath</param-name>
+        <param-value>/wink</param-value>
+      </init-param>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>_ah_warmup0</servlet-name>
+      <url-pattern>/winkjs/api.js</url-pattern>
+    </servlet-mapping> 
+  
+
 
 Examples 
 --------
 
-Check [demo](http://nioto-demo.appspot.com/) using [LoginService](/nioto/wink.js/blob/master/src/main/java/org/nioto/ws/LoginService.java) as Rest Service
+Check [the Demo](http://nioto-demo.appspot.com/demo/) using [LoginService](/nioto/wink.js/blob/master/src/main/java/org/nioto/ws/LoginService.java) as Rest Service
+and view the [generated code](http://nioto-demo.appspot.com/winkjs/api.js)
