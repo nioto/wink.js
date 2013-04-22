@@ -17,7 +17,12 @@ import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.nioto.winkjs.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * Rewrite of JSAPIWriter ( http://resteasy.svn.sourceforge.net/viewvc/resteasy/trunk/jaxrs/resteasy-jsapi/src/main/java/org/jboss/resteasy/jsapi/JSAPIWriter.java?revision=1245&view=markup )
+ * to use Wink data
+ * @author nioto
+ *
+ */
 public class RestEasyJSWriter extends AbstractJSWriter {
 
 	private final static Logger logger = LoggerFactory.getLogger(RestEasyJSWriter.class);

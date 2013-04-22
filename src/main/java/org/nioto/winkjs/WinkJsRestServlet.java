@@ -14,32 +14,77 @@ import org.nioto.winkjs.writers.AbstractJSWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Servlet extending the WInk {@link RestServlet}.
+ * 
+ * By default, the Javascript Code can be obtain by the url   /<ContextPath>/api-client.js
+ * is no jsapiurl Init param is set.
+ * 
+ * @author nioto
+ *
+ */
 public class WinkJsRestServlet extends RestServlet {
 
 	private final static Logger logger = LoggerFactory.getLogger(WinkJsRestServlet.class);
 
 	private static final long serialVersionUID = 5265749198410674747L;
 
-	private static final String JS_URI = "/api-client.js";
+	/**
+	 * Define the default relative ( to context) url of the client JS API
+	 */
+	public static final String DEFAULT_JS_URL = "/api-client.js";
+	/**
+	 * Name of the init parameter to change JS API Client url
+	 */
+	public static final String URL_INITPARAM = "jsapiurl";
+	/**
+	 * Define the relative ( to context) url of the client JS API
+	 */
+	private String jsUri;
 
+	/**
+	 * (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
+	 * 
+	 * Initialize  the Url for the JS Api Client, if is set using Init param or use the default one
+	 */
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		logger.debug("init()");
+		String tmp = getInitParameter( URL_INITPARAM );
+		
+		if (! Utils.isEmpty(tmp)) {
+			if ( tmp.charAt(0) != '/') {
+				this.jsUri = '/'+ tmp;
+			} else {
+				this.jsUri = tmp;
+			}
+		} else {
+			this.jsUri = DEFAULT_JS_URL;
+		}
 	}
 
+	/**
+	 * (non-Javadoc)
+	 * @see org.apache.wink.server.internal.servlet.RestServlet#service(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * 
+	 * Check if the request path is the JS API URL , if not call let {@link RestServlet} handle the request, otherwise then send the javascript
+	 */
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (logger.isDebugEnabled()) {
 			logger.debug(" request uri : {} , url : {}, pathinfo :{} ", new Object[] { req.getRequestURI(), req.getRequestURL(),	req.getPathInfo() });
 		}
-		if ( JS_URI.equals(req.getPathInfo())) {
+		if ( this.jsUri.equals(req.getPathInfo())) {
 			sendJavascriptCode(req, resp);
 		} else {
 			super.service(req, resp);
 		}
 	}
-
+	/**
+	 * Write the javascript code to the response
+	 */
 	private void sendJavascriptCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String framework = req.getParameter("framework");
 		AbstractJSWriter jswriter ;
@@ -53,7 +98,7 @@ public class WinkJsRestServlet extends RestServlet {
 		}
 		String pathInfo = req.getPathInfo();
 		String uri = req.getRequestURL().toString();
-		uri = uri.substring(0, 1+uri.length() - JS_URI.length());
+		uri = uri.substring(0, 1+uri.length() - DEFAULT_JS_URL.length());
 		if( logger.isDebugEnabled()) {
 			logger.debug("Serving {} : ", pathInfo);
 			logger.debug("Query {} " , req.getQueryString());

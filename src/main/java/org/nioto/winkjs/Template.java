@@ -9,16 +9,34 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author tonio
+ * Simple templating class. 
+ * Convert all  values  like "[key]" with the value of key in a map.
+ * If no value is found for a key, the segment is not modified.
  * 
+ * Support for simple tests on empty values.
+ * 
+ *  ex : 
+ *   String tmpl =" [key] is [!empty(key)] not[/empty] null";
+ *   Map<String,String> map = new HashMap<String,String>();
+ *   == > result :  " [key] is null"
+ *     
+ *   map.put( key, "content' ); 
+ *   == > result :  " content is not null"  
+ * 
+ * @author nioto
  */
 public class Template {
 
 	private static final Logger log = LoggerFactory.getLogger(Template.class);
-	
-	private static Pattern substitution = Pattern.compile("\\[(.+?)\\]");
 
-	private static Pattern tests  = Pattern.compile("(\\[!?empty\\(([^(]+)\\)\\])(.*?)(\\[\\/empty\\])",  Pattern.DOTALL);
+	/**
+	 * Pattern to find all the substituable srings
+	 */
+	private static Pattern SUBSTITUTION_PATTERN = Pattern.compile("\\[(.+?)\\]");
+	/**
+	 * PAttern to find all tests segments
+	 */
+	private static Pattern TESTS_PATTERN  = Pattern.compile("(\\[!?empty\\(([^(]+)\\)\\])(.*?)(\\[\\/empty\\])",  Pattern.DOTALL);
 
 	private String template;
 
@@ -27,15 +45,16 @@ public class Template {
 	}
 	/**
 	 *  From the example in {@link Matcher}
+	 *  Substitute all occurences of the keys from the map, with their map's value	 *  
 	 * @param data conversion map
-	 * @return return the 
+	 * @return  a string
 	 */
 	public final StringBuffer substitute(Map<String, String> data) {
 		Matcher matcher;
-		//parse tests
-		matcher = tests.matcher(this.template);
+		//parse TESTS_PATTERN
+		matcher = TESTS_PATTERN.matcher(this.template);
 		StringBuffer sb = new StringBuffer();
-		log.debug("begin tests matcher");
+		log.debug("begin TESTS_PATTERN matcher");
 		while (matcher.find()) {
 			String test = matcher.group(1);
 			String key = matcher.group(2);
@@ -52,9 +71,9 @@ public class Template {
 			matcher.appendReplacement(sb, show ? Matcher.quoteReplacement( matcher.group(3) ) : "");
 		}
 		matcher.appendTail(sb);
-		log.debug( "end tests matcher");
-		// variable substitution
-		matcher = substitution.matcher(sb);
+		log.debug( "end TESTS_PATTERN matcher");
+		// variable SUBSTITUTION_PATTERN
+		matcher = SUBSTITUTION_PATTERN.matcher(sb);
 		sb = new StringBuffer();
 		while (matcher.find()) {
 			String key = matcher.group(1);
@@ -67,7 +86,12 @@ public class Template {
 		matcher.appendTail(sb);
 		return sb;
 	}
-
+	/**
+	 *  Retrieve the data replacement for a key
+	 * @param key 
+	 * @param data map containing association between key and values 
+	 * @return 
+	 */
 	protected String getReplacement(String key, Map<String, String> data) {
 		return data.get(key);
 	}

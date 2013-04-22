@@ -10,9 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.ws.rs.core.MediaType;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.wink.common.internal.registry.metadata.ClassMetadata;
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.DeploymentConfiguration;
@@ -167,7 +164,13 @@ public abstract class AbstractJSWriter {
 			}
 		}
 	}
-	
+	/**
+	 * Retrieve the content of a file template as a StringBuilder.
+	 *  The file is loaded using {@link Class#getResource(String)} 
+	 * @param clazz  A {@link Class} 
+	 * @param relativePathToClass the path of a file relative to the param clazz
+	 * @return The content of the the file as a {@link StringBuilder}
+	 */
 	protected final static StringBuilder getTemplateContent(Class<?> clazz, String relativePathToClass) {
 			URL url = clazz.getResource(relativePathToClass);
 			StringBuilder content = new StringBuilder();
@@ -185,6 +188,11 @@ public abstract class AbstractJSWriter {
 			return content;
 		}
 	
+	/**
+	 * Retrieve a AbstractJSWriter by his name
+	 * @param name name of jswriter (must be in {@link FRAMEWORK} values ) 
+	 * @return  null if name not found 
+	 */
 	public final static AbstractJSWriter getWriter(String name) {
 		if( FRAMEWORK.RESTEASY.name().equals(name) ) {
 			return new RestEasyJSWriter();
@@ -192,6 +200,10 @@ public abstract class AbstractJSWriter {
 			return null;
 		}
 	}
+	/**
+	 * Retrieve the default {@link AbstractJSWriter}
+	 * @return
+	 */
 	public final static AbstractJSWriter getDefaultWriter() {
 		return getWriter( FRAMEWORK.RESTEASY.name() );
 	}

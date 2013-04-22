@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author tonio
+ * @author nioto
  *
  */
 public class MootoolsJSWriter extends AbstractJSWriter {

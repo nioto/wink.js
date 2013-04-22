@@ -14,6 +14,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.registry.ResourceRecord;
 
+/**
+ * Utilities Class
+ * 
+ * @author nioto
+ */
 public class Utils {
 
 	/**
@@ -35,10 +40,21 @@ public class Utils {
 			// keep it quiet
 		}
 	}
+	
+	/**
+	 * Return the name of the method
+	 * @param methodMetadata
+	 * @return the name of the Java method
+	 */
 	public static final String getFunctionName(MethodMetadata methodMetadata) {
 		return methodMetadata.getReflectionMethod().getName();
 	}
-
+	/**
+	 *  Used as the name of the Javascript function to call a WebService
+	 * @param record
+	 * @param methodMetadata
+	 * @return return the Class of the record  + '.'  +  name of the Java method
+	 */
 	public static final String getFunctionName(ResourceRecord record, MethodMetadata methodMetadata) {
 		String name  = record.getMetadata().getResourceClass().getSimpleName();
 		if( methodMetadata != null  ) {
@@ -67,6 +83,11 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Test is a String is null or empty
+	 * @param s
+	 * @return
+	 */
 	public static final boolean isEmpty(String s ) {
 		return s== null || s.length()==0;
 	}

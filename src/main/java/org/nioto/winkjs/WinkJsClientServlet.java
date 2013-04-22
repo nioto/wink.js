@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *   - "requestProcessorAttribute" must be the same value as for {@link RestServlet} init param 
  *   - "winkpath" contains the path defined for the Wink {@link RestServlet} path ( mandatory, for correct url for Rest Services)
  *   
- * @author tonio
+ * @author nioto
  *
  */
 public class WinkJsClientServlet extends HttpServlet  {
@@ -39,7 +39,7 @@ public class WinkJsClientServlet extends HttpServlet  {
   private static final String REQUEST_PROCESSOR_ATTRIBUTE = "requestProcessorAttribute";
   private String requestProcessorAttribute;
   // 
-  private static final String WINK_PATH_ATTRIBUTE = "winkpath";
+  private static final String WINK_PATH_INITPARAM = "winkpath";
   private String winkPath;
   
 	@Override
@@ -47,9 +47,9 @@ public class WinkJsClientServlet extends HttpServlet  {
 		super.init(config);
 		logger.debug("init()");
 
-		String path = getInitParameter( WINK_PATH_ATTRIBUTE );
+		String path = getInitParameter( WINK_PATH_INITPARAM );
 		if ( Utils.isEmpty( path )) {
-			throw new ServletException(" Wink path is not set  as an  init paremeter with key : " + WINK_PATH_ATTRIBUTE);
+			throw new ServletException(" Wink path is not set  as an  init paremeter with key : " + WINK_PATH_INITPARAM);
 		}
 		this.winkPath = getServletContext().getContextPath() + path;
 		if( ! this.winkPath.endsWith("/") ) {

@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 
 /**
+ *  Class copied from the RestEasy-JSAPI
+ * 
  * A utility class for handling URI template parameters. As the Java
  * regulare expressions package does not handle named groups, this
  * class attempts to simulate that functionality by using groups.
