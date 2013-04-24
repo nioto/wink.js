@@ -38,6 +38,12 @@ public class LoginService {
 		}
 	}
 	
+	@Path("static")
+	@GET
+	public Return getStaticText(){
+		return new Return("some static text");
+	}
+	
 	@Path("test")
 	@GET
 	public Return getLogin(@QueryParam("test") String str){

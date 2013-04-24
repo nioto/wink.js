@@ -1,9 +1,19 @@
 <html>
 <head>
-<link style="bootstrap.css"></link>
+<link rel="stylesheet" type="text/css" href="bootstrap1.4.css"></link>
  
 <script type="text/javascript" src="./winkjs/api.js"></script>
+
 <script type="text/javascript">
+
+// utility
+var getEmpty = function(){
+  return { $contentType : 'application/json' };
+}
+var setContent = function(id, obj){
+  var e = document.getElementById(id);
+  e.innerHTML = "<h5>"+JSON.stringify (obj)+"</h5>";
+}
 
 var submit1 = function() {
   var params = {};
@@ -29,6 +39,26 @@ var submit3 = function() {
 </script>
 </head>
 <body>
+<div class="container">
+
+
+<script type="text/javascript">
+var submitStatic =function(id){
+  var params = getEmpty();
+  setContent(id, LoginService.getStaticText (params) );
+}
+</script>
+<h1>Tests</h1>
+<div class="row">
+</div>
+<div class="row">
+  <div class="span3"><h4>Static get</h4></div>
+  <div class="span2"><button class="btn success" onclick="submitStatic('id1');">Run</button></div>
+  <div class="span2"><h6>Result :</h6></div>
+  <div class="span6" id="id1"></div>
+</div>
+
+</div> <!--  end container -->
 
 Lancer l'appel Rest 1 : 
 <input type="button" onclick="submit1();" value="Check">

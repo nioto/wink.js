@@ -96,6 +96,7 @@
         <version>9.0.2.v20130417</version>
         <configuration>
           <useProvidedScope>true</useProvidedScope>
+          <useTestScope>true</useTestScope>
           <webAppSourceDirectory>${basedir}/src/test/resources/html</webAppSourceDirectory>
           <webApp>
             <contextPath>/test</contextPath>
