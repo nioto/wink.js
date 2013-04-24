@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<web-app
+        version="2.5"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  <servlet>
+    <description> Extends Wink RestServlet and add the ability to generate a JS client for the API </description>
+    <servlet-name>_ah_warmup</servlet-name>
+    <servlet-class>org.nioto.winkjs.WinkJsRestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>org.nioto.ws.MyApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>_ah_warmup</servlet-name>
+    <url-pattern>/wink/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <description>Simple Servlet to generate a JS client for the API</description>
+    <servlet-name>_ah_warmup0</servlet-name>
+    <servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
+    <init-param>
+      <param-name>winkpath</param-name>
+      <param-value>/wink</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>_ah_warmup0</servlet-name>
+    <url-pattern>/winkjs/api.js</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list> 
+</web-app>
