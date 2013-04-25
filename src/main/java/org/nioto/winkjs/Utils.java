@@ -13,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.apache.wink.server.internal.registry.ResourceRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities Class
@@ -21,6 +23,8 @@ import org.apache.wink.server.internal.registry.ResourceRecord;
  */
 public class Utils {
 
+	private static final Logger log = LoggerFactory.getLogger(Utils.class);
+	
 	/**
 	 * private constructor to avoid multiples instances
 	 */
@@ -47,6 +51,9 @@ public class Utils {
 	 * @return the name of the Java method
 	 */
 	public static final String getFunctionName(MethodMetadata methodMetadata) {
+		if (log.isDebugEnabled() ) {
+			log.debug( methodMetadata.getReflectionMethod() .toGenericString() );
+		}
 		return methodMetadata.getReflectionMethod().getName();
 	}
 	/**
