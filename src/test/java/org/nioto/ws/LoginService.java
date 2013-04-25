@@ -52,8 +52,8 @@ public class LoginService {
 
 	@Path("test2")
 	@POST // http://www.michaelwilliams.co.za/no-content-to-map-to-object-due-to-end-of-input/
-	public Return  getLogin2( int a ){
-		return new Return("login with (int)" + a);
+	public Return  getLogin2( int aa){
+		return new Return("login with (int)" + aa);
 	}
 	@Path("test3/{id}")
 	@GET
