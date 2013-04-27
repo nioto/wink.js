@@ -1,43 +1,25 @@
 package org.nioto.ws;
 
-import java.io.Serializable;
 import java.util.logging.Logger;
 
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.MatrixParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Path("login")
 @Produces({ MediaType.APPLICATION_JSON})
-public class LoginService {
-	
-	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger( LoginService.class.getSimpleName());
+public class MyWebService {
 
-	@XmlRootElement
-	public static class Return implements Serializable{
-		private static final long serialVersionUID = 1L;
-		String content ;
-		public Return(){
-			
-		}
-		public Return(String str) {
-			this.content = str;
-		}
-		
-		public void setContent(String content) {
-			this.content = content;
-		}
-		public String getContent() {
-			return this.content;
-		}
-	}
-	
+	@SuppressWarnings("unused")
+	private static Logger logger = Logger.getLogger( MyWebService.class.getSimpleName());
+
 	@Path("static")
 	@GET
 	public Return getStaticText(){
@@ -58,6 +40,26 @@ public class LoginService {
 	@Path("test3/{id}")
 	@GET
 	public Return getLogin3( @PathParam("id") int id ){
+		return new Return("login with pathParam : " + id );
+	}
+	@Path("test4")
+	@POST
+	public Return getLogin4( Return id ){
+		return new Return("login with pathParam : " + id );
+	}
+	@Path("test5")
+	@GET
+	public Return getLogin5( @CookieParam(value="cookie") int id ){
+		return new Return("login with pathParam : " + id );
+	}
+	@Path("test6")
+	@GET
+	public Return getLogin6( @MatrixParam("toto") String id ){
+		return new Return("login with pathParam : " + id );
+	}
+	@Path("test7")
+	@POST
+	public Return getLogin7( @FormParam("toto") String id ){
 		return new Return("login with pathParam : " + id );
 	}
 }

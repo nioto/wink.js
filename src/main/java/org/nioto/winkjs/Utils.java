@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.annotation.Annotation;
+import java.net.URL;
 import java.util.Set;
 
 import javax.ws.rs.core.MediaType;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class Utils {
 
 	private static final Logger log = LoggerFactory.getLogger(Utils.class);
-	
+
 	/**
 	 * private constructor to avoid multiples instances
 	 */
@@ -32,8 +33,10 @@ public class Utils {
 	}
 
 	/**
-	 * Close a  {@link Closeable} discarding exception .
-	 * @param  input Element to close. 
+	 * Close a {@link Closeable} discarding exception .
+	 * 
+	 * @param input
+	 *          Element to close.
 	 */
 	public static final void closeQuietly(Closeable input) {
 		try {
@@ -44,37 +47,45 @@ public class Utils {
 			// keep it quiet
 		}
 	}
-	
+
 	/**
 	 * Return the name of the method
+	 * 
 	 * @param methodMetadata
 	 * @return the name of the Java method
 	 */
 	public static final String getFunctionName(MethodMetadata methodMetadata) {
-		if (log.isDebugEnabled() ) {
-			log.debug( methodMetadata.getReflectionMethod() .toGenericString() );
+		if (log.isDebugEnabled()) {
+			log.debug(methodMetadata.getReflectionMethod().toGenericString());
 		}
 		return methodMetadata.getReflectionMethod().getName();
 	}
+
 	/**
-	 *  Used as the name of the Javascript function to call a WebService
+	 * Used as the name of the Javascript function to call a WebService
+	 * 
 	 * @param record
 	 * @param methodMetadata
-	 * @return return the Class of the record  + '.'  +  name of the Java method
+	 * @return return the Class of the record + '.' + name of the Java method
 	 */
 	public static final String getFunctionName(ResourceRecord record, MethodMetadata methodMetadata) {
-		String name  = record.getMetadata().getResourceClass().getSimpleName();
-		if( methodMetadata != null  ) {
-			return name + "."  + getFunctionName(methodMetadata);
+		String name = record.getMetadata().getResourceClass().getSimpleName();
+		if (methodMetadata != null) {
+			return name + "." + getFunctionName(methodMetadata);
 		} else {
-			return name ;
+			return name;
 		}
 	}
+
 	/**
-	 *  Append the content of an {@link InputStream} into a {@link StringBuilder}
-	 * @param input {@link InputStream} to read
-	 * @param sb {@link StringBuilder} to append to
-	 * @throws IOException In case or IO read excetion
+	 * Append the content of an {@link InputStream} into a {@link StringBuilder}
+	 * 
+	 * @param input
+	 *          {@link InputStream} to read
+	 * @param sb
+	 *          {@link StringBuilder} to append to
+	 * @throws IOException
+	 *           In case or IO read excetion
 	 */
 	public static void copyFileContent(InputStream input, StringBuilder sb) throws IOException {
 		try {
@@ -89,56 +100,86 @@ public class Utils {
 			Utils.closeQuietly(input);
 		}
 	}
-	
+
 	/**
 	 * Test is a String is null or empty
+	 * 
 	 * @param s
 	 * @return
 	 */
-	public static final boolean isEmpty(String s ) {
-		return s== null || s.length()==0;
+	public static final boolean isEmpty(String s) {
+		return s == null || s.length() == 0;
 	}
+
 	/**
 	 * Retrieve a annotation by its class from a list of annotations instances
+	 * 
 	 * @param searchList
 	 * @param annotation
 	 * @return
 	 */
-  @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public final static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
-     if (searchList == null) return null;
-     for (Annotation ann : searchList) {
-        if (ann.annotationType().equals(annotation)) {
-           return (T) ann;
-        }
-     }
-     return null;
-  }
-  /**
-   *  Choose a {@link MediaType} from a list, in this order : 
-   *   - application/json if present,
-   *   - the first element of the list, if the list is not null
-   *   - test/plain is the list is empty 
-   * @param set List of {@link MediaType}
-   * @return A (not null) string representation of the {@link MediaType}
-   */
-  public final static String getConsumes(Set<MediaType> set) {
-  		if (set != null) {
-  			if (set.contains(MediaType.APPLICATION_JSON_TYPE)) {
-  				return MediaType.APPLICATION_JSON;
-  			} else if ( ! set.isEmpty() ) {
-  				set.iterator().next().getType();
-  			}
-  		}
-  		return MediaType.TEXT_PLAIN;
-  	}
-  
+		if (searchList == null)
+			return null;
+		for (Annotation ann : searchList) {
+			if (ann.annotationType().equals(annotation)) {
+				return (T) ann;
+			}
+		}
+		return null;
+	}
+
 	/**
-	 *  Convert a list of mediatype to a string of comma separated 
-	 * @param mediaTypes Set of {@link MediaType}
+	 * Choose a {@link MediaType} from a list, in this order : - application/json
+	 * if present, - the first element of the list, if the list is not null -
+	 * test/plain is the list is empty
+	 * 
+	 * @param set
+	 *          List of {@link MediaType}
+	 * @return A (not null) string representation of the {@link MediaType}
+	 */
+	public final static String getConsumes(Set<MediaType> set) {
+		if (set != null) {
+			if (set.contains(MediaType.APPLICATION_JSON_TYPE)) {
+				return MediaType.APPLICATION_JSON;
+			} else if (!set.isEmpty()) {
+				set.iterator().next().getType();
+			}
+		}
+		return MediaType.TEXT_PLAIN;
+	}
+
+	/**
+	 * Convert a list of mediatype to a string of comma separated
+	 * 
+	 * @param mediaTypes
+	 *          Set of {@link MediaType}
 	 * @return
 	 */
 	public final static String getWants(Set<MediaType> mediaTypes) {
 		return StringUtils.join(mediaTypes, ',');
+	}
+
+	public static final InputStream getStream(Class<?> clazz, String path) throws IOException {
+		URL url = clazz.getResource(path);
+		return url != null ? url.openStream() : null;
+	}
+
+	public static final StringBuilder getContent(Class<?> clazz, String path) throws IOException {
+		StringBuilder sb = null;
+		InputStream input = null;
+		try {
+			input = Utils.getStream(clazz, path);
+			if (input != null) {
+				sb = new StringBuilder();
+				Utils.copyFileContent(input, sb);
+			}
+		} catch (IOException e) {
+			log.error("unable to read " + path + " from " + clazz, e);
+		} finally {
+			Utils.closeQuietly(input);
+		}
+		return sb;
 	}
 }

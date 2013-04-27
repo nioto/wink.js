@@ -2,7 +2,6 @@ package org.nioto.winkjs.writers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -31,18 +30,12 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		super( FRAMEWORK.RESTEASY);
 	}
 
-	private InputStream getStream(String path) throws IOException {
-		URL url = getClass().getResource(path);
-		logger.debug("url : {} for path {}", url, path);
-		return url != null ? url.openStream() : null;
-	}
-
 	@Override
 	protected void appendPreScript(String uri, StringBuilder sb) {
 		super.appendPreScript(uri, sb);
 		InputStream input = null;
 		try {
-				input = getStream("resteasy-client.js");
+				input = Utils.getStream( getClass(),"resteasy-client.js");
 				if( input != null) {
 					Utils.copyFileContent(input, sb);
 				}

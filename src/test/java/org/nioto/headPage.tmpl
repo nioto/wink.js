@@ -1,0 +1,57 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="bootstrap1.4.css"></link>
+ 
+<script type="text/javascript" src="./winkjs/api.js"></script>
+
+<script type="text/javascript">
+var setContent = function(id, str){
+  var e = document.getElementById(id);
+  e.innerHTML = str;
+}
+var runAll = function(id, obj){
+  var ar = document.getElementsByTagName("button");
+  for (i=1;i<ar.length;i++){
+    ar[i].click();
+  }
+}
+
+/*
+    Original script title: "Object.identical.js"; version 1.12
+    Copyright (c) 2011, Chris O'Brien, prettycode.org
+    http://github.com/prettycode/Object.identical.js
+*/
+
+Object.identical = function (a, b, sortArrays) {        
+  function sort(object) {
+    if (sortArrays === true && Array.isArray(object)) {
+      return object.sort();
+    }
+    else if (typeof object !== "object" || object === null) {
+      return object;
+    }
+
+    return Object.keys(object).sort().map(function(key) {
+      return {
+        key: key,
+        value: sort(object[key])
+      };
+    });
+  }
+  return JSON.stringify(sort(a)) === JSON.stringify(sort(b));
+};
+</script>
+</head>
+<body>
+<div class="container">
+
+<h1>Tests</h1>
+<button class="btn warning" onclick="runAll();">Run All</button>
+
+<div class='row'>
+  <div class='span5'>&nbsp;</div>
+  <div class='span1'>&nbsp;</div>
+  <div class='span4'><h5>Live call</h5></div>
+  <div class='span4'><h5>Expected</h5></div>
+  <div class='span1'><h6>Result</h6></div>
+</div>

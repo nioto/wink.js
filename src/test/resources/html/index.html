@@ -5,103 +5,30 @@
 <script type="text/javascript" src="./winkjs/api.js"></script>
 
 <script type="text/javascript">
-
-// utility
-var getEmpty = function(){
-  return { $contentType : 'application/json' };
-}
 var setContent = function(id, obj){
   var e = document.getElementById(id);
   e.innerHTML = "<h5>"+JSON.stringify (obj)+"</h5>";
 }
-
 var runAll = function(id, obj){
   var ar = document.getElementsByTagName("button");
-  for (i=0;i<ar.length;i++){
+  for (i=1;i<ar.length;i++){
     ar[i].click();
   }
-}
-
-var submit1 = function() {
-  var params = {};
-  params.test = "my test !!";
-  params.$contentType = 'application/json';
-  var e = document.getElementById("result1");
-  e.innerHTML = "returned : " + JSON.stringify ( LoginService.getLogin (params) );
-}
-var submit2 = function() {
-  var params = {};
-  params.$entity = 59; // { "a" : 12 };
-  params.$contentType = 'application/json';
-  var e = document.getElementById("result2");
-  e.innerHTML = "returned : " + JSON.stringify ( LoginService.getLogin2 (params) );
-}
-var submit3 = function() {
-  var params = {};
-  params['id']= 100;
-  params.$contentType = 'application/json';
-  var e = document.getElementById("result3");
-  e.innerHTML = "returned : " + JSON.stringify ( LoginService.getLogin3 (params) );
 }
 </script>
 </head>
 <body>
 <div class="container">
 
-
 <h1>Tests</h1>
 <div class="row">
   <div class="span3"><h4>Run All tests</h4></div>
   <div class="span2"><button class="btn warning" onclick="runAll();">Run All</button></div>
 </div>
-<script type="text/javascript">
-var submitStatic =function(id){
-  var params = getEmpty();
-  setContent(id, LoginService.getStaticText (params) );
-}
-</script>
-<div class="row">
-  <div class="span3"><h4>Static get</h4></div>
-  <div class="span2"><button class="btn success" onclick="submitStatic('id1');">Run</button></div>
-  <div class="span2"><h6>Result :</h6></div>
-  <div class="span6" id="id1"></div>
-</div>
 
-<script type="text/javascript">
-var submitGetLogin2 =function(id){
-  var params = getEmpty();
-  params.$entity= 123;
-  setContent(id, LoginService.getLogin2 (params) );
-}
-</script>
-<div class="row">
-  <div class="span3"><h4>GetLogin2</h4></div>
-  <div class="span2"><button class="btn success" onclick="submitGetLogin2('id2');">Run</button></div>
-  <div class="span2"><h6>Result :</h6></div>
-  <div class="span6" id="id2"></div>
-</div>
-
+[list]
 
 </div> <!--  end container -->
-
-Lancer l'appel Rest 1 : 
-<input type="button" onclick="submit1();" value="Check">
-<br />
-<div id="result1"></div>
-
-<hr />
-Lancer l'appel Rest 2 : 
-<input type="button" onclick="submit2();" value="Check">
-<br />
-<div id="result2"></div>
-
-<hr />
-Lancer l'appel Rest 3 : 
-<input type="button" onclick="submit3();" value="Check">
-<br />
-<div id="result3"></div>
-
-<hr />
 
 </body>
 </html>

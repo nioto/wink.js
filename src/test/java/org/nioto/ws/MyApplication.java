@@ -11,7 +11,7 @@ public class MyApplication extends WinkApplication {
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		classes.add(LoginService.class);
+		classes.add(MyWebService.class);
 		return classes;
 	}
 

@@ -64,12 +64,20 @@
 
 	<build>
 		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.js</include>
-				</includes>
-			</resource>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.js</include>
+          <include>**/*.tmpl</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**/*.js</include>
+          <include>**/*.tmpl</include>
+        </includes>
+      </resource>
 		</resources>
 		<plugins>
 			<plugin>
