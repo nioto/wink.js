@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractJSWriter {
 
+	public static final String NAMESPACE = "Winkjs";
 	
 	private final static Logger log = LoggerFactory.getLogger(AbstractJSWriter.class);
 	
@@ -157,10 +158,10 @@ public abstract class AbstractJSWriter {
 		if (declaredPrefixes.add(declaringPrefix)) {
 			int lastDot = declaringPrefix.lastIndexOf(".");
 			if (lastDot == -1)
-				script.append( "var " + declaringPrefix + " = {};\n");
+				script.append(  NAMESPACE + "." +  declaringPrefix + " = function(){};\n");
 			else {
 				declarePrefix(script, declaringPrefix.substring(0, lastDot), declaredPrefixes);
-				script.append( declaringPrefix + " = {}; \n");
+				script.append( NAMESPACE + "." +  declaringPrefix + " = function(){};\n");
 			}
 		}
 	}

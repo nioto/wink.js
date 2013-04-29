@@ -93,7 +93,7 @@ public class GenerateTestsServlet extends HttpServlet {
 	private void generateMethod(Writer printWriter, String path, String declaringPrefix,
 			MethodMetadata methodMetadata) throws IOException {
 		
-		String functionName = declaringPrefix + "." + Utils.getFunctionName(methodMetadata)  ;
+		String functionName = "Winkjs."+declaringPrefix + "." + Utils.getFunctionName(methodMetadata)  ;
 		html.incCounter();		
 		Method m = methodMetadata.getReflectionMethod();
 /*		printWriter.append( 	"//" );

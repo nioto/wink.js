@@ -12,6 +12,7 @@ public class MyApplication extends WinkApplication {
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 		classes.add(MyWebService.class);
+		classes.add(EchoWebService.class);
 		return classes;
 	}
 

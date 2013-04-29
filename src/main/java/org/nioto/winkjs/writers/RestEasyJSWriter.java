@@ -44,7 +44,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		} finally{
 			Utils.closeQuietly(input);
 		}
-		sb.append( "REST.apiURL = '" + uri + "';\n");
+		sb.append(NAMESPACE).append(".__REST.apiURL = '" + uri + "';\n");
 	}
 
 	protected void generateMethod(StringBuilder script, String path, String fnName, MethodMetadata methodMetaData) {
@@ -54,11 +54,11 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 			logger.debug("uri : {} // paths = {}", uri, methodMetaData.getPaths());
 		}
 		script.append("// " + methodMetaData.getHttpMethod() + " " + uri + "\n");
-		script.append( fnName +"." + Utils.getFunctionName(methodMetaData) + " = function(_params){"+ "\n");
+		script.append( NAMESPACE +"."+fnName +"." + Utils.getFunctionName(methodMetaData) + " = function(_params){"+ "\n");
 		script.append(" var params = _params ? _params : {};\n");
-		script.append(" var request = new REST.Request();\n");
+		script.append(" var request = new ").append(NAMESPACE).append(".__REST.Request();\n");
 		script.append(" request.setMethod('" + methodMetaData.getHttpMethod() + "');\n");
-		script.append(" var uri = params.$apiURL ? params.$apiURL : REST.apiURL;\n");
+		script.append(" var uri = params.$apiURL ? params.$apiURL : ").append(NAMESPACE).append(".__REST.apiURL;\n");
 		if (uri.contains("{")) {
 			printURIParams(uri, script);
 		} else {
@@ -154,7 +154,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 				script.append(" uri += '" + replacedCurlyURI.substring(i, matcher.start()) + "';\n");
 			}
 			String name = matcher.group(1);
-			script.append(" uri += REST.Encoding.encodePathSegment(params." + name + ");\n");
+			script.append(" uri += ").append(NAMESPACE).append(".__REST.Encoding.encodePathSegment(params." + name + ");\n");
 			i = matcher.end();
 		}
 		if (i < replacedCurlyURI.length())

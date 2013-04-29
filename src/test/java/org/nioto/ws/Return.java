@@ -22,6 +22,6 @@ public class Return implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Return.class  with content ="+this.content;
+		return "Return [content ="+this.content +" ]";
 	}
 }
