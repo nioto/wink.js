@@ -17,17 +17,17 @@ title: Wink.JS > Install
 	* ### Add the WinkJsClientServlet
 ```xml
 <servlet>  
-  <description>Simple Servlet to generate a JS client for the API</description>
-  <servlet-name>winjsServlet</servlet-name>
-  <servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
-  <!-- Mandatory, we need to know the path associated with Wink -->
-  <init-param>
-    <param-name>winkpath</param-name>
-    <param-value>/wink</param-value>
-  </init-param>
+	<description>Simple Servlet to generate a JS client for the API</description>
+	<servlet-name>winjsServlet</servlet-name>
+	<servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
+  	<!-- Mandatory, we need to know the path associated with Wink -->
+	<init-param>
+		<param-name>winkpath</param-name>
+		<param-value>/wink</param-value>
+	</init-param>
 </servlet>
 <servlet-mapping>
-  <servlet-name>winjsServlet</servlet-name>
-  <url-pattern>/winkjs/api.js</url-pattern>
+	<servlet-name>winjsServlet</servlet-name>
+	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
 ```
