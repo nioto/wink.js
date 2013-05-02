@@ -3,10 +3,9 @@ layout: index
 title: Wink.JS
 ---
 
-# This is a H1
+# Wink JS Api Client
 
-[the clickable text](http://xlson.com/)
+If you're using [Wink](http://wink.apache.org) for your REST API, you can now easily generate the Javascript Code to call your Rest resources.
 
-* Bullet lists are also easy to create
-* One more
+Based on the [RestEasy-JSAPI](http://docs.jboss.org/resteasy/2.0.0.GA/userguide/html/AJAX_Client.html)
 
