@@ -3,7 +3,7 @@ layout: index
 title: Wink.JS > Install
 ---
 
-## Installation
+## Generation
 
 1. ### copy winkjs-0.1.jar into your WEB-INF/lib/ folder
 
@@ -31,3 +31,9 @@ title: Wink.JS > Install
 	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
 ```
+
+3. ### Retrieve your script file
+Depending on the configuration choice you made, get a copy your script at :
+		`http://[yourhost.com]/[ContextRoot]/[winkPath]/api-client.js` OR `http://[yourhost.com]/[ContextRoot]/winkjs/api.js`
+
+		
