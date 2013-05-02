@@ -7,12 +7,13 @@ title: Wink.JS > Compilation
 
 ### I use maven to compile the source code
 
-Just do : 
+Just retrieve the source of the project, and do : 
 
 ```bash
 mvn package
 ```
 
+#### Note :
 The pom.xml use Wink v.1.2.1-incubating for compilation, if you want to use Wink v.1.3.0 just replace, in pom.xml, the part :
 
 ```xml
