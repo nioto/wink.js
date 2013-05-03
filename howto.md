@@ -16,8 +16,10 @@ public interface X{
  public void Z(String entity);
 }
 ```
+
 will generate 2 methods :
-```javascript
+
+```js
 Winkjs.X.Y(params){...}
 Winkjs.X.Z(params){...}
 ```
