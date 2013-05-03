@@ -168,9 +168,9 @@ public class GenerateTestsServlet extends HttpServlet {
 	}
 	
 	protected static class FieldInfo {
-		Class<?> clazz ; 
-		String name;
-		Class<? extends Annotation> ann;
+		private Class<?> clazz ; 
+		private String name;
+		private Class<? extends Annotation> ann;
 		public FieldInfo(Class<?> clazz, String name, Class<? extends Annotation> ann ) {
 			this.clazz = clazz;
 			this.name = name;

@@ -25,20 +25,20 @@ import org.slf4j.LoggerFactory;
  * 
  * @author nioto
  */
-public class Template {
+public final class Template {
 
 	private static final Logger log = LoggerFactory.getLogger(Template.class);
 
 	/**
 	 * Pattern to find all the substituable srings
 	 */
-	private static Pattern SUBSTITUTION_PATTERN = Pattern.compile("\\[(.+?)\\]");
+	private static final Pattern SUBSTITUTION_PATTERN = Pattern.compile("\\[(.+?)\\]");
 	/**
 	 * PAttern to find all tests segments
 	 */
-	private static Pattern TESTS_PATTERN  = Pattern.compile("(\\[!?empty\\(([^(]+)\\)\\])(.*?)(\\[\\/empty\\])",  Pattern.DOTALL);
+	private static final Pattern TESTS_PATTERN  = Pattern.compile("(\\[!?empty\\(([^(]+)\\)\\])(.*?)(\\[\\/empty\\])",  Pattern.DOTALL);
 
-	private String template;
+	private final String template;
 
 	public Template(String tmpl) {
 		this.template = tmpl;
@@ -55,11 +55,12 @@ public class Template {
 		matcher = TESTS_PATTERN.matcher(this.template);
 		StringBuffer sb = new StringBuffer();
 		log.debug("begin TESTS_PATTERN matcher");
+		String test , key, value;
+		boolean show;
 		while (matcher.find()) {
-			String test = matcher.group(1);
-			String key = matcher.group(2);
-			String value = getReplacement(key, data);
-			boolean show;
+			test = matcher.group(1);
+			key = matcher.group(2);
+			value = getReplacement(key, data);
 			if( test.charAt(1)=='!') {
 				show = ( value !=null && value.length()>0);
 			} else {
@@ -76,8 +77,8 @@ public class Template {
 		matcher = SUBSTITUTION_PATTERN.matcher(sb);
 		sb = new StringBuffer();
 		while (matcher.find()) {
-			String key = matcher.group(1);
-			String value = getReplacement(key, data);
+			key = matcher.group(1);
+			value = getReplacement(key, data);
 			if (value == null) {
 				value = matcher.group(0);
 			}

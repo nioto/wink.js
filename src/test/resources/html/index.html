@@ -1,34 +1,19 @@
 <html>
 <head>
+	<!--
 <link rel="stylesheet" type="text/css" href="bootstrap1.4.css"></link>
- 
+ -->
 <script type="text/javascript" src="./winkjs/api.js"></script>
 
-<script type="text/javascript">
-var setContent = function(id, obj){
-  var e = document.getElementById(id);
-  e.innerHTML = "<h5>"+JSON.stringify (obj)+"</h5>";
-}
-var runAll = function(id, obj){
-  var ar = document.getElementsByTagName("button");
-  for (i=1;i<ar.length;i++){
-    ar[i].click();
-  }
-}
-</script>
 </head>
 <body>
 <div class="container">
+<br /><br /><br /><br /><br />
+<a href="./winkjs/api.js">View generated Javascript</a>
+<br />
+<br />
+<a href="./generate">Test the samples Rest Service</a>
 
-<h1>Tests</h1>
-<div class="row">
-  <div class="span3"><h4>Run All tests</h4></div>
-  <div class="span2"><button class="btn warning" onclick="runAll();">Run All</button></div>
 </div>
-
-[list]
-
-</div> <!--  end container -->
-
 </body>
 </html>

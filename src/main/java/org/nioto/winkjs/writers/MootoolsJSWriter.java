@@ -5,7 +5,6 @@ package org.nioto.winkjs.writers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import org.apache.wink.common.internal.registry.metadata.MethodMetadata;
 import org.nioto.winkjs.Template;
@@ -28,7 +27,6 @@ public class MootoolsJSWriter extends AbstractJSWriter {
 	 */
 	public MootoolsJSWriter() {
 		super(FRAMEWORK.MOOTOOLS);
-		System.out.println("Find template : " + TEMPLATE_STR );
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +47,7 @@ public class MootoolsJSWriter extends AbstractJSWriter {
 		data.put("contentType", Utils.getConsumes(methodMetaData.getConsumes()) );
 		script.append( TEMPLATE.substitute(data) );
 	}
-
+/*
 	private void printURIParams(String uri, StringBuilder script) {
 		String replacedCurlyURI = PathHelper.replaceEnclosedCurlyBraces(uri);
 		Matcher matcher = PathHelper.URI_PARAM_PATTERN.matcher(replacedCurlyURI);
@@ -65,4 +63,5 @@ public class MootoolsJSWriter extends AbstractJSWriter {
 		if (i < replacedCurlyURI.length())
 			script.append(" uri += '" + replacedCurlyURI.substring(i) + "';\n");
 	}
+	*/
 }

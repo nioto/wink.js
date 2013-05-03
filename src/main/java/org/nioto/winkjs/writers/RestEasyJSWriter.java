@@ -107,30 +107,30 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		switch (metaData.getParamType()) {
 			case QUERY:
 				QueryParam qa = Utils.findAnnotation( metaData.getAnnotations(), QueryParam.class);
-				paramName  = ( qa ==null ? 	paramName = metaData.getMember().getName() : qa.value() ); 
-				print(metaData, paramName, script, "QueryParameter");
+				paramName  = ( qa ==null ?  metaData.getMember().getName() : qa.value() ); 
+				print(paramName, script, "QueryParameter");
 				break;
 			case HEADER:
 				HeaderParam ha = Utils.findAnnotation( metaData.getAnnotations(), HeaderParam.class);
-				paramName  = ( ha ==null ? 	paramName = metaData.getMember().getName() : ha.value() ); 
-				print(metaData, paramName, script, "Header");
+				paramName  = ( ha ==null ? metaData.getMember().getName() : ha.value() ); 
+				print(paramName, script, "Header");
 				// FIXME: warn about forbidden headers:
 				// http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader-method
 				break;
 			case COOKIE:
 				CookieParam ca = Utils.findAnnotation( metaData.getAnnotations(), CookieParam.class);
-				paramName  = ( ca ==null ? 	paramName = metaData.getMember().getName() : ca.value() ); 
-				print(metaData, paramName, script, "Cookie");
+				paramName  = ( ca ==null ? metaData.getMember().getName() : ca.value() ); 
+				print( paramName, script, "Cookie");
 				break;
 			case MATRIX:
 				MatrixParam ma = Utils.findAnnotation( metaData.getAnnotations(), MatrixParam.class);
-				paramName  = ( ma ==null ? 	paramName = metaData.getMember().getName() : ma.value() ); 
-				print(metaData, paramName, script, "MatrixParameter");
+				paramName  = ( ma ==null ? metaData.getMember().getName() : ma.value() ); 
+				print(paramName, script, "MatrixParameter");
 				break;
 			case FORM:
 				FormParam fa = Utils.findAnnotation( metaData.getAnnotations(), FormParam.class);
-				paramName  = ( fa ==null ? 	paramName = metaData.getMember().getName() : fa.value() ); 
-				print(metaData, paramName, script, "FormParameter");
+				paramName  = ( fa ==null ? 	metaData.getMember().getName() : fa.value() ); 
+				print(paramName, script, "FormParameter");
 				break;
 			case ENTITY:
 				// the entity
@@ -140,7 +140,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 		}
 	}
 
-	private void print(Injectable metaData, String paramName, StringBuilder script, String type) {
+	private void print( String paramName, StringBuilder script, String type) {
 		script.append(String.format(" if(params.%s)\n  request.add%s('%s', params.%s);\n", paramName, type, paramName,
 				paramName));
 	}
@@ -157,7 +157,8 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 			script.append(" uri += ").append(NAMESPACE).append(".__REST.Encoding.encodePathSegment(params." + name + ");\n");
 			i = matcher.end();
 		}
-		if (i < replacedCurlyURI.length())
+		if (i < replacedCurlyURI.length()) {
 			script.append(" uri += '" + replacedCurlyURI.substring(i) + "';\n");
+		}
 	}
 }

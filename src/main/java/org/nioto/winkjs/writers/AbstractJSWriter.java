@@ -39,7 +39,7 @@ public abstract class AbstractJSWriter {
 	public static enum FRAMEWORK {
 		JQUERY("jquery"), RESTEASY("resteasy"), MOOTOOLS("mootools"); 
 		private String jsFramework;
-		private FRAMEWORK(String name) {
+		private FRAMEWORK(final String name) {
 			this.jsFramework = name;
 		}
 		public String getJsFramework() {
@@ -78,7 +78,7 @@ public abstract class AbstractJSWriter {
 	 * @param sb {@link StringBuilder} containing the JS script generated
 	 */
 	protected void appendPostScript(String uri, StringBuilder sb) {
-		sb.append( "// END of client generation");
+		sb.append( "\n// END of client generation\n");
 	}
 	/**
 	 * Main method to generate the Javascript Client  code
@@ -156,10 +156,10 @@ public abstract class AbstractJSWriter {
 	 */
 	private void declarePrefix(StringBuilder script, String declaringPrefix, Set<String> declaredPrefixes) {
 		if (declaredPrefixes.add(declaringPrefix)) {
-			int lastDot = declaringPrefix.lastIndexOf(".");
-			if (lastDot == -1)
+			int lastDot = declaringPrefix.lastIndexOf('.');
+			if (lastDot == -1) {
 				script.append(  NAMESPACE + "." +  declaringPrefix + " = function(){};\n");
-			else {
+			} else {
 				declarePrefix(script, declaringPrefix.substring(0, lastDot), declaredPrefixes);
 				script.append( NAMESPACE + "." +  declaringPrefix + " = function(){};\n");
 			}
@@ -195,11 +195,13 @@ public abstract class AbstractJSWriter {
 	 * @return  null if name not found 
 	 */
 	public final static AbstractJSWriter getWriter(String name) {
+		AbstractJSWriter  writer;
 		if( FRAMEWORK.RESTEASY.name().equals(name) ) {
-			return new RestEasyJSWriter();
+			writer = new RestEasyJSWriter();
 		} else {
-			return null;
+			writer = null;
 		}
+		return writer;
 	}
 	/**
 	 * Retrieve the default {@link AbstractJSWriter}

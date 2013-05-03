@@ -10,8 +10,12 @@ import javax.ws.rs.FormParam;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.nioto.GenerateTestsServlet.FieldInfo;
 import org.nioto.ws.Return;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HtmlHelper {
+
+	private final static Logger log = LoggerFactory.getLogger(HtmlHelper.class);
 
 	Random rand = new Random();
   static ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
@@ -28,7 +32,7 @@ public class HtmlHelper {
 	
 	public StringBuilder getScript(String wsFunctionName, List<FieldInfo> list, Method m){
 		StringBuilder  sb = new StringBuilder ("<script>");
-		sb .append( "var ").append( METHOD_NAME_PREFIX).append( this.counter) .append("=function(id){")
+		sb.append( "var ").append( METHOD_NAME_PREFIX).append( this.counter) .append("=function(id){")
 			.append( "var params = {  }; ");
 		Object[] params = new Object[list.size()];
 		int i =0;
@@ -70,13 +74,15 @@ public class HtmlHelper {
 	
 	private Object call( Method m, Object[] args) {
 		Class<?> clazz = m.getDeclaringClass();
+		Object res ;
 		try {
 			Object obj = clazz.getConstructor().newInstance();
-		  return m.invoke(obj, args);
+		  res = m.invoke(obj, args);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return e;
+			log.error( "Error invoking dynamicly a method " ,e);
+			res = e.getMessage();
 		}
+		return res;
 	}
 	private Object getDummy(Class<?> clazz) {
 		Object data =null;
@@ -96,12 +102,14 @@ public class HtmlHelper {
 		return data;
 	}
 	private String toJson(Object data) {
+		String res;
 		try {
-			return 	mapper.writeValueAsString( data);
+			res = mapper.writeValueAsString( data);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return e.getMessage();
+			log.error("Error converting to Json ",e);
+			res = e.getMessage();
 		}
+		return res;
 	}
 
 	public StringBuilder getHtml(String functionName) {

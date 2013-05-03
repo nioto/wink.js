@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author nioto
  */
-public class Utils {
+public final class Utils {
 
 	private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
@@ -38,7 +38,7 @@ public class Utils {
 	 * @param input
 	 *          Element to close.
 	 */
-	public static final void closeQuietly(Closeable input) {
+	public static void closeQuietly(Closeable input) {
 		try {
 			if (input != null) {
 				input.close();
@@ -54,7 +54,7 @@ public class Utils {
 	 * @param methodMetadata
 	 * @return the name of the Java method
 	 */
-	public static final String getFunctionName(MethodMetadata methodMetadata) {
+	public static String getFunctionName(MethodMetadata methodMetadata) {
 		if (log.isDebugEnabled()) {
 			log.debug(methodMetadata.getReflectionMethod().toGenericString());
 		}
@@ -68,12 +68,12 @@ public class Utils {
 	 * @param methodMetadata
 	 * @return return the Class of the record + '.' + name of the Java method
 	 */
-	public static final String getFunctionName(ResourceRecord record, MethodMetadata methodMetadata) {
-		String name = record.getMetadata().getResourceClass().getSimpleName();
-		if (methodMetadata != null) {
-			return name + "." + getFunctionName(methodMetadata);
-		} else {
+	public static String getFunctionName(ResourceRecord record, MethodMetadata methodMetadata) {
+		final String name = record.getMetadata().getResourceClass().getSimpleName();
+		if (methodMetadata == null) {
 			return name;
+		} else {
+			return name + "." + getFunctionName(methodMetadata);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class Utils {
 	 * @param s
 	 * @return
 	 */
-	public static final boolean isEmpty(String s) {
+	public static boolean isEmpty(String s) {
 		return s == null || s.length() == 0;
 	}
 
@@ -119,9 +119,10 @@ public class Utils {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public final static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
-		if (searchList == null)
+	public static <T> T findAnnotation(Annotation[] searchList, Class<T> annotation) {
+		if (searchList == null) {
 			return null;
+		}
 		for (Annotation ann : searchList) {
 			if (ann.annotationType().equals(annotation)) {
 				return (T) ann;
@@ -139,7 +140,7 @@ public class Utils {
 	 *          List of {@link MediaType}
 	 * @return A (not null) string representation of the {@link MediaType}
 	 */
-	public final static String getConsumes(Set<MediaType> set) {
+	public static String getConsumes(Set<MediaType> set) {
 		if (set != null) {
 			if (set.contains(MediaType.APPLICATION_JSON_TYPE)) {
 				return MediaType.APPLICATION_JSON;
@@ -157,16 +158,16 @@ public class Utils {
 	 *          Set of {@link MediaType}
 	 * @return
 	 */
-	public final static String getWants(Set<MediaType> mediaTypes) {
+	public static String getWants(Set<MediaType> mediaTypes) {
 		return StringUtils.join(mediaTypes, ',');
 	}
 
-	public static final InputStream getStream(Class<?> clazz, String path) throws IOException {
-		URL url = clazz.getResource(path);
+	public static InputStream getStream(Class<?> clazz, String path) throws IOException {
+		final URL url = clazz.getResource(path);
 		return url != null ? url.openStream() : null;
 	}
 
-	public static final StringBuilder getContent(Class<?> clazz, String path) throws IOException {
+	public static StringBuilder getContent(Class<?> clazz, String path) throws IOException {
 		StringBuilder sb = null;
 		InputStream input = null;
 		try {

@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 public class EchoWebService {
 
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger( EchoWebService.class.getSimpleName());
+	private final static Logger logger = Logger.getLogger( EchoWebService.class.getSimpleName());
 
 	@GET
 	public Return getText(){

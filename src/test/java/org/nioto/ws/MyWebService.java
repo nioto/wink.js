@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public class MyWebService {
 
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger( MyWebService.class.getSimpleName());
+	private final static Logger logger = Logger.getLogger( MyWebService.class.getSimpleName());
 
 	@Path("static")
 	@GET

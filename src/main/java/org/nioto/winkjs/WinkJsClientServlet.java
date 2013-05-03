@@ -43,11 +43,11 @@ public class WinkJsClientServlet extends HttpServlet  {
   private String winkPath;
   
 	@Override
-	public void init(ServletConfig config) throws ServletException {
+	public void init(final ServletConfig config) throws ServletException {
 		super.init(config);
 		logger.debug("init()");
 
-		String path = getInitParameter( WINK_PATH_INITPARAM );
+		final String path = getInitParameter( WINK_PATH_INITPARAM );
 		if ( Utils.isEmpty( path )) {
 			throw new ServletException(" Wink path is not set  as an  init paremeter with key : " + WINK_PATH_INITPARAM);
 		}
@@ -59,18 +59,18 @@ public class WinkJsClientServlet extends HttpServlet  {
     this.requestProcessorAttribute = getServletContext().getInitParameter( REQUEST_PROCESSOR_ATTRIBUTE);
 		logger.debug("requestProcessorAttribute : {} ", requestProcessorAttribute );
 		// Check if RequestProcessor is available 
-		RequestProcessor processor = RequestProcessor.getRequestProcessor( getServletContext(), this.requestProcessorAttribute);
+		final RequestProcessor processor = RequestProcessor.getRequestProcessor( getServletContext(), this.requestProcessorAttribute);
 		if( processor == null ) {
 			throw new ServletException(" Wink RequestProcessor not found !! Is Wink configured to load before WinkJsClientServlet in web.xml and/ or " + REQUEST_PROCESSOR_ATTRIBUTE + " init paremeter set properly");
 		}
 	}
 
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		if (logger.isDebugEnabled()) {
 			logger.debug(" request uri : {} , url : {}, pathinfo :{} ", new Object[] { req.getRequestURI(), req.getRequestURL(),	req.getPathInfo() });
 		}
-		String framework = req.getParameter("framework");
+		final String framework = req.getParameter("framework");
 		AbstractJSWriter jswriter ;
 		if ( Utils.isEmpty(framework)) {
 			jswriter = AbstractJSWriter.getDefaultWriter();
@@ -81,7 +81,7 @@ public class WinkJsClientServlet extends HttpServlet  {
 			throw new ServletException(" framework : " + framework + " not supported"); 
 		}
 		RequestProcessor processor = RequestProcessor.getRequestProcessor( getServletContext(), this.requestProcessorAttribute );
-		DeploymentConfiguration conf = processor.getConfiguration();
+		final DeploymentConfiguration conf = processor.getConfiguration();
 		PrintWriter printWriter = null;
 		resp.setContentType("application/javascript");
 		try {
