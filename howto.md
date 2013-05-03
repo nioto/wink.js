@@ -42,7 +42,7 @@ Winkjs.X.Z(params){...}
 						<td>The MIME type of the body entity sent as the Content-Type header.</td>
 					</tr><tr>
 						<td>$accepts</td>
-						<td>Determined by @Provides, defaults to */*.</td>
+						<td>Determined by @Provides, defaults to \*/\*.</td>
 						<td>The accepted MIME types sent as the Accept header.</td>
 					</tr><tr>
 						<td>$callback</td>
