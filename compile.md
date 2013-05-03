@@ -7,7 +7,11 @@ title: Wink.JS > Compilation
 
 ### I use maven to compile the source code
 
-Just retrieve the source of the project, and do : 
+Just retrieve the source of the project
+```bash
+git clone https://github.com/nioto/wink.js.git
+```
+, and run : 
 
 ```bash
 mvn package
