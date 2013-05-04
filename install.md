@@ -3,21 +3,27 @@ layout: index
 title: Wink.JS > Install
 ---
 
-## Generation
+<h2>Generation</h2>
 
-### copy [https://sourceforge.net/projects/winkjs/files/latest/download?source=files](winkjs-0.1.jar) into your WEB-INF/lib/ folder
+<ul>
 
-### web.xml configuration
+<li><h3>Copy [https://sourceforge.net/projects/winkjs/files/latest/download?source=files](winkjs-0.1.jar) into your WEB-INF/lib/ folder</h3></li>
 
-  * #### Replacing RestServlet
+<li><h3>web.xml configuration</h3>
+<br />
 
-  Replace **org.apache.wink.server.internal.servlet.RestServlet** by **org.nioto.winkjs.WinkJsRestServlet** in your web.xml file.
+<ul>
+<li><h4>Replacing RestServlet</h4>
+<br />
+ Replace **org.apache.wink.server.internal.servlet.RestServlet** by **org.nioto.winkjs.WinkJsRestServlet** in your web.xml file.
+<br />
+ _Optional_ : you can add a **jsapiurl** init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
+</li>
 
-  _Optional_ : you can add a **jsapiurl** init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
+<li><h4>OR</h4></li>
 
-#### OR
-
-  * #### Add the WinkJsClientServlet
+<li><h4>Add the WinkJsClientServlet</h4>
+<br />
 
 ```xml
 <servlet>  
@@ -35,13 +41,18 @@ title: Wink.JS > Install
 	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
 ```
+<br />
 
-#### Note :
+<h4>Note :</h4>
+<br />
+In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
+</li>
+</ul>
+</li>
 
-   In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
+<li><h3>Retrieve your script file</h3>
+<br />
+<br />
 
-
-### Retrieve your script file
-
-Depending on the configuration choice you made, get a copy your script at :
+Depending on the configuration choice you made, get a copy your script at :<br />
 		`http://[yourhost.com]/[ContextRoot]/[winkPath]/api-client.js` OR `http://[yourhost.com]/[ContextRoot]/winkjs/api.js`
