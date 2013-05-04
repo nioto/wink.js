@@ -9,7 +9,7 @@ title: Wink.JS > Install
 
 2. ### web.xml configuration
 
-   * #### Replacing RestServlet
+    * #### Replacing RestServlet
 
      Replace **org.apache.wink.server.internal.servlet.RestServlet** by **org.nioto.winkjs.WinkJsRestServlet** in your web.xml file.
 
@@ -17,7 +17,7 @@ title: Wink.JS > Install
 
     #### OR
 
-   * #### Add the WinkJsClientServlet
+    * #### Add the WinkJsClientServlet
 
 
 ```xml
@@ -36,7 +36,7 @@ title: Wink.JS > Install
 	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
 ```
-        #### Note :  In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
+   #### Note :  In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
 
 
 3. ### Retrieve your script file
