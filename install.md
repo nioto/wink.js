@@ -17,7 +17,9 @@ title: Wink.JS > Install
 
     #### OR
 
-    *    #### Add the WinkJsClientServlet
+    * #### Add the WinkJsClientServlet
+
+
 ```xml
 <servlet>  
 	<description>Simple Servlet to generate a JS client for the API</description>
