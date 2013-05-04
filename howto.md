@@ -5,7 +5,7 @@ title: Wink.JS > How-to
 
 ## A look of the javascript code
 
-For each Rest resources, there is a corresponding method to call it.
+For each Rest resources, there is a corresponding Javascript method.
 
 ```java
 @Path("/")
@@ -28,7 +28,7 @@ Winkjs.X.Z(params){...}
 ### The `params` parameter
 
 (from <http://docs.jboss.org/resteasy/2.0.0.GA/userguide/html/AJAX_Client.html>)
-<table><caption>Table&nbsp;44.1.&nbsp;API parameter properties</caption><thead><tr>
+<table><caption>API parameter properties</caption><thead><tr>
 						<th>Property name</th>
 						<th>Default</th>
 						<th>Description</th>
