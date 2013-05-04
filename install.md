@@ -38,7 +38,7 @@ title: Wink.JS > Install
 
 #### Note :
 
-	 In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
+   In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
 
 
 ### Retrieve your script file
