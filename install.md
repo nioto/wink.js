@@ -40,7 +40,7 @@ title: Wink.JS > Install
 ```
 
 <h4>Note :</h4>
-In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
+In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  `<load-on-startup/>` )
 </li>
 </ul>
 </li>
