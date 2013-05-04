@@ -17,7 +17,7 @@ title: Wink.JS > Install
 
 #### OR
 
-  * #### Add the WinkJsClientServlet
+  * ####Add the WinkJsClientServlet
 
 ```xml
 <servlet>  
@@ -36,7 +36,7 @@ title: Wink.JS > Install
 </servlet-mapping> 
 ```
 
-  #### Note :
+  ####Note :
 	 In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
 
 
