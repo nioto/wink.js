@@ -37,9 +37,11 @@ title: Wink.JS > Install
 ```
 
 #### Note :
+
 	 In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <load-on-startup/> )
 
 
 ### Retrieve your script file
+
 Depending on the configuration choice you made, get a copy your script at :
 		`http://[yourhost.com]/[ContextRoot]/[winkPath]/api-client.js` OR `http://[yourhost.com]/[ContextRoot]/winkjs/api.js`
