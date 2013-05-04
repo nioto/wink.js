@@ -5,7 +5,9 @@ title: Wink.JS > Compilation
 
 ## Compilation
 
-### I use maven to compile the source code
+If you really want to compile the sources, this is how you do it 
+
+### Use maven
 
 Just retrieve the source of the project
 
