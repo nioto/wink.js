@@ -15,7 +15,7 @@ title: Wink.JS > Install
 
      _Optional_ : you can add a **jsapiurl** init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
 
-   #### OR
+    #### OR
 
    * #### Add the WinkJsClientServlet
 
