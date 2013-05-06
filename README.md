@@ -4,12 +4,12 @@ Wink JS Api Client
  Based on the [RestEasy-JSAPI](http://docs.jboss.org/resteasy/2.0.0.GA/userguide/html/AJAX_Client.html), a Java client for your Wink Rest resources
  
 
-This code is based on **Wink v1.2.1-incubating**
+The code use **Wink v1.3.0**, but works with **v1.2.1-incubating**
 
 How to use
 ----------
 
-Put the winks-jsapi.jar into your WEB-INF/lib next to "wink-server-1.2.1-incubating.jar"
+Put the _winkjs-0.1.jar_ into your WEB-INF/lib next to "wink-server-1.3.0.jar"
 
 ### Using WinkJsRestServlet extending the Wink RestServlet
 
