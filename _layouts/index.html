@@ -65,7 +65,7 @@ var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
 var namePage = sPage.substring(0, sPage.lastIndexOf('.'));
 var mylink = document.getElementById(namePage);
 if(mylink) {
-	var txt = mylink.innerText;
+	var txt = mylink.innerHTML;
 	mylink.parentNode.innerHTML = "&#187; &#187;" + txt;
 }
 </script>
