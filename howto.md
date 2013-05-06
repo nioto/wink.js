@@ -86,7 +86,8 @@ public class Foo{
 
 We can use the previous JAX-RS API in JavaScript using the following code:
 
+
 ```js
 var text = Winkjs.Foo.get({id: 45, order: 'desc', 'X-Foo': 'hello', colour: 'blue', 'Foo-Cookie': 123987235444});
-Winkjs.Foo..put({$entity: text});
+Winkjs.Foo.put({$entity: text});
 ```
