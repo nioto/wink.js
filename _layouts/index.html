@@ -66,7 +66,7 @@ var namePage = sPage.substring(0, sPage.lastIndexOf('.'));
 var mylink = document.getElementById(namePage);
 if(mylink) {
 	var txt = mylink.innerHTML;
-	mylink.parentNode.innerHTML = "&#187; &#187;" + txt;
+	mylink.parentNode.innerHTML = "&#187; &#187; &nbsp;&nbsp;<h4>" + txt + "</h4>";
 }
 </script>
   </body>
