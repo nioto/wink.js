@@ -64,3 +64,28 @@ Winkjs.X.Z(params){...}
 						<td>
 						</td><td>If username and password are set, they will be used for credentials for the request.</td>
 					</tr></tbody></table>
+					
+<!-- _  -->
+
+*Using the API*
+
+```java
+@Path("foo")
+public class Foo{
+ @Path("{id}")
+ @GET
+ public String get(@QueryParam("order") String order, @HeaderParam("X-Foo") String header,
+                   @MatrixParam("colour") String colour, @CookieParam("Foo-Cookie") String cookie){
+  …
+ }
+ @POST
+ public void post(String text){
+ }
+}
+```
+
+We can use the previous JAX-RS API in JavaScript using the following code:
+```js
+var text = Winkjs.Foo.get({order: 'desc', 'X-Foo': 'hello', colour: 'blue', 'Foo-Cookie': 123987235444});
+Winkjs.Foo..put({$entity: text});
+```
