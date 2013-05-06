@@ -74,7 +74,7 @@ Winkjs.X.Z(params){...}
 public class Foo{
  @Path("{id}")
  @GET
- public String get(@QueryParam("order") String order, @HeaderParam("X-Foo") String header,
+ public String get(@PathParam("id") int id, @QueryParam("order") String order, @HeaderParam("X-Foo") String header,
                    @MatrixParam("colour") String colour, @CookieParam("Foo-Cookie") String cookie){
   …
  }
