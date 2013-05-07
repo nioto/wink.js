@@ -96,12 +96,6 @@ public class GenerateTestsServlet extends HttpServlet {
 		String functionName = "Winkjs."+declaringPrefix + "." + Utils.getFunctionName(methodMetadata)  ;
 		html.incCounter();		
 		Method m = methodMetadata.getReflectionMethod();
-/*		printWriter.append( 	"//" );
-		printWriter.append( 	m.getReturnType().getSimpleName() );
-		printWriter.append( 	' ');
-		printWriter.append( functionName );
-		printWriter.append( 	'(' );
-		*/
 		List<Injectable> list = methodMetadata.getFormalParameters();
 		List<FieldInfo> fields = new ArrayList<FieldInfo>();
  		for (Injectable injectable : list) {
@@ -127,32 +121,32 @@ public class GenerateTestsServlet extends HttpServlet {
 		switch (metaData.getParamType()) {
 			case QUERY:
 				QueryParam qa = Utils.findAnnotation( metaData.getAnnotations(), QueryParam.class);
-				paramName  = ( qa ==null ? 	paramName = metaData.getMember().getName() : qa.value() );
+				paramName  = ( qa ==null ? metaData.getMember().getName() : qa.value() );
 				ann  = QueryParam.class;
 				break;
 			case HEADER:
 				HeaderParam ha = Utils.findAnnotation( metaData.getAnnotations(), HeaderParam.class);
-				paramName  = ( ha ==null ? 	paramName = metaData.getMember().getName() : ha.value() );
+				paramName  = ( ha ==null ? metaData.getMember().getName() : ha.value() );
 				ann = HeaderParam.class;
 				break;
 			case COOKIE:
 				CookieParam ca = Utils.findAnnotation( metaData.getAnnotations(), CookieParam.class);
-				paramName  = ( ca ==null ? 	paramName = metaData.getMember().getName() : ca.value() );
+				paramName  = ( ca ==null ? metaData.getMember().getName() : ca.value() );
 				ann = CookieParam.class;
 				break;
 			case MATRIX:
 				MatrixParam ma = Utils.findAnnotation( metaData.getAnnotations(), MatrixParam.class);
-				paramName  = ( ma ==null ? 	paramName = metaData.getMember().getName() : ma.value() );
+				paramName  = ( ma ==null ? metaData.getMember().getName() : ma.value() );
 				ann = MatrixParam.class;
 				break;
 			case FORM:
 				FormParam fa = Utils.findAnnotation( metaData.getAnnotations(), FormParam.class);
-				paramName  = ( fa ==null ? 	paramName = metaData.getMember().getName() : fa.value() );
+				paramName  = ( fa ==null ? 	metaData.getMember().getName() : fa.value() );
 				ann = FormParam.class;
 				break;
 			case PATH:
 				PathParam pa = Utils.findAnnotation( metaData.getAnnotations(), PathParam.class);
-				paramName  = ( pa ==null ? 	paramName = metaData.getMember().getName() : pa.value() );
+				paramName  = ( pa ==null ? metaData.getMember().getName() : pa.value() );
 				ann = PathParam.class;
 				break;
 			case ENTITY:

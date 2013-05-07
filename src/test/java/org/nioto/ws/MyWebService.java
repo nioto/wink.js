@@ -49,7 +49,7 @@ public class MyWebService {
 	}
 	@Path("test5")
 	@GET
-	public Return getLogin5( @CookieParam(value="cookie") int id ){
+	public Return getLogin5( @CookieParam(value="X-cookie") int id ){
 		return new Return("login with pathParam : " + id );
 	}
 	@Path("test6")

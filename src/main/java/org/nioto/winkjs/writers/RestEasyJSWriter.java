@@ -141,7 +141,7 @@ public class RestEasyJSWriter extends AbstractJSWriter {
 	}
 
 	private void print( String paramName, StringBuilder script, String type) {
-		script.append(String.format(" if(params.%s)\n  request.add%s('%s', params.%s);\n", paramName, type, paramName,
+		script.append(String.format(" if(params[\"%s\"])\n  request.add%s('%s', params[\"%s\"]);\n", paramName, type, paramName,
 				paramName));
 	}
 

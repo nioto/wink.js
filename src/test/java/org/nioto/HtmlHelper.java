@@ -48,7 +48,7 @@ public class HtmlHelper {
 			} else {
 				name = fieldInfo.getName();
 			}
-			sb.append("params.").append( name).append("=").append( data ).append( ';' );
+			sb.append("params[\'").append( name).append("\']=").append( data ).append( ';' );
 			if( ! hasFormParam && fieldInfo.getAnn() !=null && fieldInfo.getAnn().isAssignableFrom(FormParam.class)) {
 				hasFormParam =true;
 			}
@@ -62,12 +62,15 @@ public class HtmlHelper {
 		sb.append( ";\n");
 		sb.append( "var result = " + toJson(call(m, params))).append( ";\n");
 		sb.append( "setContent(id+'-result', '<pre>'+JSON.stringify(result)+'</pre>');" );
-		sb.append( "var liveResult = ").append(wsFunctionName).append("(params);").append( ";\n");
+		sb.append( "var liveResult ;");
+		sb.append( "try {");
+		sb.append( "liveResult="	).append(wsFunctionName).append("(params);").append( ";\n");
 		sb.append( "setContent(id,  '<pre>'+JSON.stringify(liveResult)+'</pre>');" );
 		sb.append( " if (Object.identical(result, liveResult))")
 			.append("{ setContent(id+'-check', '<span class=\"label success\">PASS</span>');}")
 			.append(" else { setContent(id+'-check', '<span class=\"label error\">FAIL</span>');}");
-		sb.append('}');
+		sb.append( "} catch(err) {setContent(id+'-check', '<span class=\"label error\">FAIL</span>' + err);}");
+		sb.append('}');		
 		sb.append("</script>");
 		return sb;
 	}
