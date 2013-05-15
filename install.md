@@ -7,7 +7,7 @@ title: Wink.JS > Install
 
 <ul>
 
-<li><h3>Copy [winkjs-0.1.jar](http://sourceforge.net/projects/winkjs/files/v0.1/) into your WEB-INF/lib/ folder</h3></li>
+<li><h3>Copy [winkjs-0.2.jar](https://sourceforge.net/projects/winkjs/files/v0.2/) into your WEB-INF/lib/ folder</h3></li>
 
 <li><h3>In your webapp configuration file : web.xml</h3>
 <ul>
