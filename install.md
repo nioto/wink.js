@@ -7,21 +7,23 @@ title: Wink.JS > Install
 
 <ul>
 
-<li><h3>Copy [winkjs-0.1.jar](http://sourceforge.net/projects/winkjs/files/v0.1/) into your WEB-INF/lib/ folder</h3></li>
+<li><h3>Copy <a href="http://sourceforge.net/projects/winkjs/files/v0.2/">wink.js-0.2.jar</a> into your WEB-INF/lib/ folder</h3></li>
 
 <li><h3>In your webapp configuration file : web.xml</h3>
 <ul>
 <li><h4>Replacing RestServlet</h4>
- Replace **org.apache.wink.server.internal.servlet.RestServlet** by **org.nioto.winkjs.WinkJsRestServlet** in your web.xml file.
+ Replace <strong>org.apache.wink.server.internal.servlet.RestServlet</strong> by <strong>org.nioto.winkjs.WinkJsRestServlet</strong> in your web.xml file.
  
- _Optional_ : you can add a **jsapiurl** init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
+<em>Optional</em> : you can add a <string>jsapiurl</string> init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
 </li>
 
 <li><h4>OR</h4></li>
 
 <li><h4>Add the WinkJsClientServlet</h4>
 
-```xml
+<div class="highlight">
+<pre>
+<code class="xml language-xml" data-lang="xml">
 <servlet>  
 	<description>Simple Servlet to generate a JS client for the API</description>
 	<servlet-name>winjsServlet</servlet-name>
@@ -36,10 +38,9 @@ title: Wink.JS > Install
 	<servlet-name>winjsServlet</servlet-name>
 	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
-```
-
+</code></pre></div>
 <h4>Note :</h4>
-In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  `<load-on-startup/>` )
+In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <code>&lt;load-on-startup/&gt;</code> )
 </li>
 </ul>
 </li>
