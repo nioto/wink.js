@@ -13,7 +13,7 @@ title: Wink.JS > Install
 <ul>
 <li><h4>Replacing RestServlet</h4>
  Replace <strong>org.apache.wink.server.internal.servlet.RestServlet</strong> by <strong>org.nioto.winkjs.WinkJsRestServlet</strong> in your web.xml file.
- 
+ <br /><br />
 <em>Optional</em> : you can add a <string>jsapiurl</string> init param to specify an alternate path to get the Wink JS API Client ( default : /api-client.js in the ContextRoot of the webapp )
 </li>
 
@@ -21,23 +21,27 @@ title: Wink.JS > Install
 
 <li><h4>Add the WinkJsClientServlet</h4>
 
-```xml
-<servlet>  
-	<description>Simple Servlet to generate a JS client for the API</description>
-	<servlet-name>winjsServlet</servlet-name>
-	<servlet-class>org.nioto.winkjs.WinkJsClientServlet</servlet-class>
-  	<!-- Mandatory, we need to know the path associated with Wink -->
-	<init-param>
-		<param-name>winkpath</param-name>
-		<param-value>/wink</param-value>
-	</init-param>
-</servlet>
-<servlet-mapping>
-	<servlet-name>winjsServlet</servlet-name>
-	<url-pattern>/winkjs/api.js</url-pattern>
-</servlet-mapping> 
-```
-
+<div class="highlight">
+<pre>
+<code class="xml language-xml" data-lang="xml"> 
+&lt;servlet&gt;  
+	&lt;description&gt;Simple Servlet to generate a JS client for the API&lt;/description&gt;
+	&lt;servlet-name&gt;winjsServlet&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.nioto.winkjs.WinkJsClientServlet&lt;/servlet-class&gt;
+  	&lt;!-- Mandatory, we need to know the path associated with Wink --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;winkpath&lt;/param-name&gt;
+		&lt;param-value&gt;/wink&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;winjsServlet&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/winkjs/api.js&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt; 
+</code>
+</pre>
+</div>
+<br/>
 <h4>Note :</h4>
 In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <code>&lt;load-on-startup/&gt;</code> )
 </li>
