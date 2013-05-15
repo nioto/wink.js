@@ -21,9 +21,7 @@ title: Wink.JS > Install
 
 <li><h4>Add the WinkJsClientServlet</h4>
 
-<div class="highlight">
-<pre>
-<code class="xml language-xml" data-lang="xml">
+```xml
 <servlet>  
 	<description>Simple Servlet to generate a JS client for the API</description>
 	<servlet-name>winjsServlet</servlet-name>
@@ -38,7 +36,8 @@ title: Wink.JS > Install
 	<servlet-name>winjsServlet</servlet-name>
 	<url-pattern>/winkjs/api.js</url-pattern>
 </servlet-mapping> 
-</code></pre></div>
+```
+
 <h4>Note :</h4>
 In this case, the Wink RestServlet must be initialized before any call  to the WinkJsClientServlet ( using  <code>&lt;load-on-startup/&gt;</code> )
 </li>
